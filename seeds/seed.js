@@ -90,13 +90,13 @@ exports.seed = function(knex, Promise) {
         }),
         knex('replies').insert({
             body: 'A question. A very good question.',
-            user_id: 2,
-            question_id: 1
+            user_id: 1,
+            question_id: 2
         }),
         knex('replies').insert({
             body: 'A question. A very good question.',
             user_id: 2,
-            question_id: 1
+            question_id: 2
         }),
         knex('messages').insert({
             body: 'A messages. A very good messages.',
