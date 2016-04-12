@@ -124,22 +124,22 @@ module.exports = router;
 
 
 
-//reduce method for collectiong data from lookup tables
+// reduce method for collectiong data from lookup tables
 // router.get('/articles', function(req, res, next) {
-    // knex('articles').reduce(function ( article_arr, article ){
-    //   return knex('questions')
-    //   .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
-    //   .where({article_id: article.id})
-    //   .reduce(function ( question_arr, question ){
-    //     question_arr.push(question);
-    //     return question_arr;
-    //   }, [] ).then(function ( questions ){
-    //     article.questions = questions;
-    //     article_arr.push(article);
-    //     return article_arr;
-    //   })
-    // }, [])
-    // .then(function ( articles ){
-    //   res.render('articles', { articles: articles })
-    // })
+//     knex('articles').reduce(function ( article_arr, article ){
+//       return knex('questions')
+//       .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
+//       .where({article_id: article.id})
+//       .reduce(function ( question_arr, question ){
+//         question_arr.push(question);
+//         return question_arr;
+//       }, [] ).then(function ( questions ){
+//         article.questions = questions;
+//         article_arr.push(article);
+//         return article_arr;
+//       })
+//     }, [])
+//     .then(function ( articles ){
+//       res.render('articles', { articles: articles })
+//     })
 // });
