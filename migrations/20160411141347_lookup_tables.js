@@ -32,5 +32,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('channels_users').dropTable('replies_votes').dropTable('users_oauth').dropTable('tags_questions').dropTable('tags_articles').dropTable('articles_questions');
+  return knex.schema.dropTable('channels_users').dropTable('replies_votes').dropTable('users_oauth').dropTable('tags_questions').dropTable('tags_articles').dropTable('articles_questions').dropTable('tags_users');
 };
