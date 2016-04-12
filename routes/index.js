@@ -40,7 +40,15 @@ router.get('/signup', function(req, res, next){
 router.get('/channels', function(req, res, next) {
   knex('channels')
   .then(function(results) {
-    res.render('channels', {title: "k", channels: results});
+    res.render('channels', {title: "Channels", channels: results});
+  })
+});
+
+router.get('/messages', function(req, res, next) {
+  knex('messages')
+  .then(function(results) {
+    console.log(results);
+    res.render('messages', {title: "Messages", messages: results});
   })
 });
 
