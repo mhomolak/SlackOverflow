@@ -13,13 +13,12 @@ router.post('/signup', function(req, res, next) {
       let hash = bcrypt.hashSync(req.body.password, 10);
       Users().insert({
           email: req.body.email,
-          password: hash
+          password: hash,
+          name: req.body.name,
+          admin: req.body.admin
       }).then(function(){
         req.session.email = req.body.email;
         req.session.save();
-        console.log(req.session);
-        // req.setCookie('test','test');
-        // req.session.test = "test";
       }).then(function(){
         res.redirect('/');
       })
@@ -35,7 +34,7 @@ router.post('/login', function(req, res, next) {
   }).first().then(function(user) {
     if ( user && bcrypt.compareSync(req.body.password, user.password) ) {
       req.session.email = user.email;
-      res.redirect('/');
+      res.redirect('../users');
     } else {
       res.redirect('/login');
     }
@@ -44,7 +43,7 @@ router.post('/login', function(req, res, next) {
 
 router.get('/logout', function(req, res) {
   res.clearCookie('session');
-  res.redirect('/');
+  res.redirect('/login');
 });
 
 module.exports = router;

@@ -1,17 +1,18 @@
 exports.seed = function(knex, Promise) {
     return Promise.join(
       // Deletes ALL existing entries
-      knex.raw('TRUNCATE channels, channels_users, articles, knex_migrations, knex_migrations_lock, messages, oauth_services, questions, replies, replies_votes, superpowers, tags, tags_questions, users, users_oauth CASCADE'),
+      knex.raw('TRUNCATE articles, articles_questions, channels, channels_users, knex_migrations, knex_migrations_lock, messages, oauth_services, questions, replies, replies_votes, superpowers, tags, tags_articles, tags_questions, users, users_oauth CASCADE'),
+      knex.raw('ALTER SEQUENCE articles_id_seq RESTART'),
       knex.raw('ALTER SEQUENCE channels_id_seq RESTART'),
       knex.raw('ALTER SEQUENCE knex_migrations_id_seq RESTART'),
       knex.raw('ALTER SEQUENCE messages_id_seq RESTART'),
       knex.raw('ALTER SEQUENCE oauth_services_id_seq RESTART'),
       knex.raw('ALTER SEQUENCE questions_id_seq RESTART'),
       knex.raw('ALTER SEQUENCE replies_id_seq RESTART'),
+      knex.raw('ALTER SEQUENCE superpowers_id_seq RESTART'),
       knex.raw('ALTER SEQUENCE tags_id_seq RESTART'),
       knex.raw('ALTER SEQUENCE users_id_seq RESTART'),
-      knex.raw('ALTER SEQUENCE superpowers_id_seq RESTART'),
-      knex.raw('ALTER SEQUENCE articles_id_seq RESTART'),
+
 
 
         // Inserts seed entries
@@ -68,38 +69,49 @@ exports.seed = function(knex, Promise) {
         knex('articles').insert({name: 'Article 3-- Javascript'}),
         //questions
         knex('questions').insert({
+            id:1,
             title: 'Article 1 -- HTML',
             body: 'A question. A very good question.',
             user_id: 1
         }),
         knex('questions').insert({
+            id:2,
             title: 'Article 2-- CSS',
             body: 'A question. A very good question.',
             user_id: 2
         }),
         knex('questions').insert({
+            id:3,
             title: 'Article 3-- Javascript',
             body: 'A question. A very good question.',
+<<<<<<< HEAD:seeds/seed.js
+            user_id: 4
+=======
+            user_id:2
+>>>>>>> ddedc66a4b997a26f1cc2122ac72ad8259787b34:seedholder/oldseed
         }),
         knex('channels').insert({name:'An inaugural channel.'}),
         knex('replies').insert({
-            body: 'A question. A very good question.',
-            user_id: 2,
-            question_id: 3
-        }),
-        knex('replies').insert({
+            id:1,
             body: 'A question. A very good question.',
             user_id: 2,
             question_id: 1
         }),
         knex('replies').insert({
+            id: 2,
+            body: 'A question. A very good question.',
+            user_id: 1,
+            question_id: 2
+        }),
+        knex('replies').insert({
+            id: 3,
             body: 'A question. A very good question.',
             user_id: 2,
-            question_id: 2
+            question_id: 1
         }),
         knex('messages').insert({
             body: 'A messages. A very good messages.',
-            user_id: 2
+            user_id: 1
         }),
         knex('messages').insert({
             body: 'A second messages. A very good second messages.',
