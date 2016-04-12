@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.string('name');
     table.string('password');
     table.string('email');
-    table.datetime('date');
+    table.timestamps('date');
     table.boolean('admin').defaultTo('false');
     table.string('portrait_url');
     table.string('github_profile_url');
