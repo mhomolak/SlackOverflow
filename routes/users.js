@@ -195,6 +195,7 @@ router.get('/articles_questions', function(req, res, next) {
       })
     }, [])
     .then(function ( articles ){
+      console.log(articles);
       res.render('articles', { articles: articles })
     })
 });
