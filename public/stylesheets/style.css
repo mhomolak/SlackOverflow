@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 70px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -7,11 +7,47 @@ a {
   color: #00B7FF;
 }
 
+.navList{
+  list-style: none;
+  color: white;
+}
+
+.navList li{
+  display: inline;
+  font-size: 30px;
+}
+
+.navList li a {
+  font-family: 'Patua One', cursive;
+  color: white;
+  text-decoration: none;
+  margin-left: 35px;
+}
+
+.navList li a:hover {
+  text-decoration: none;
+  font-size: 35px;
+}
+
+
+.logo {
+  display: inline;
+  font-family: 'Pacifico', cursive;
+  color: white;
+  font-size: 60px;
+  margin-right: 200px;
+}
+
+.headPad{
+  height: 20px;
+}
+
 .specialHead {
+  font-family: 'Patua One', cursive;
   text-align: center;
   font-size: 60px;
   color: black;
-  margin-top: 60px;
+  margin-top: 70px;
 }
 
 button {
@@ -49,7 +85,7 @@ button {
   background-color: #f2f2f2;
   border: 1px solid #999999;
   margin-left: 500px;
-  margin-top: 110px;
+  margin-top: 75px;
 }
 
 .profileTable{
@@ -120,7 +156,7 @@ textarea {
 }
 
 .paddingDiv {
-  height: 100px;
+  height: 60px;
 }
 
 input[type="button"] {
@@ -130,13 +166,13 @@ input[type="button"] {
 .articleDiv {
   margin: 0 auto;
   position: relative;
-  width: 1200px;
+  width: 90%;
   background-color: #f2f2f2;
   border: 1px solid #999999;
 }
 
 .articleTable {
-  width: 1200px;
+  width: 100%;
 }
 
 .articleTable tr th {
@@ -154,8 +190,6 @@ input[type="button"] {
 .tagDiv {
   margin: 0 auto;
   position: relative;
-  /*width: 300px;*/
-  /*border: 1px solid #999999;*/
   text-align: left;
   padding: 5px;
 }
