@@ -5,15 +5,15 @@
   <table class="articleTable">
     <tr>
       <th>Topic</th>
-      <th>Number of Posts</th>
       <th>Author</th>
+      <th>Number of Posts</th>
       <th>Most Recent Post</th>
     </tr>
     {{#data}}
     <tr>
-      <td>{{title}}</td>
+      <td><a href='/users/question/{{question_id}}'>{{title}}</a></td>
+      <td><a href='/users/profile/{{user_id}}'>{{name}}</a></td>
       <td>{{count}}</td>
-      <td>{{name}}</td>
       <td>{{date}}</td>
     </tr>
     {{/data}}

@@ -19,8 +19,10 @@ knex.from('articles').where('articles.id', req.params.articlesID)
     var resultsArray = results;
     for (var i = 0; i < resultsArray.length; i++) {
       var questionInfo = {};
+      questionInfo.question_id = resultsArray[i].question_id;
       questionInfo.title = resultsArray[i].title;
       questionInfo.name = resultsArray[i].name;
+      questionInfo.user_id = resultsArray[i].user_id;
       questionInfo.date = resultsArray[i].date;
       questionInfo.count = 'Count Goes Here';
       questionInfo.id = results[i].id;
@@ -45,6 +47,7 @@ knex.from('articles').where('articles.id', req.params.articlesID)
       };
     })
   });
+
 // console.log(bigArray);
 
 router.get('/users', function(req, res, next) {
