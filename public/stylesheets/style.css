@@ -6,3 +6,40 @@ body {
 a {
   color: #00B7FF;
 }
+
+.specialHead {
+  text-align: center;
+  font-size: 60px;
+  color: black;
+  margin-top: 60px;
+}
+.editButton{
+  text-align: center;
+  font-size: 15px;
+  color: black;
+  margin-top: 10px;
+}
+
+.profPic {
+  width:300px;
+  height: 300px;
+  border: solid black 2px;
+  padding: 5px;
+  margin-left:100px;
+  margin-top: 60px;
+  float: left;
+}
+
+.profileTable{
+  margin-left: 500px;
+  margin-top: 110px;
+}
+
+      .profileTable th {
+        border: 1px solid lightgray;
+        padding: 10px;
+      }
+      .profileTable td {
+        border: 1px solid lightgray;
+        padding: 10px;
+      }
