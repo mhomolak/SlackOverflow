@@ -9,7 +9,8 @@ const Users = function() { return knex('users') };
 /* GET home page. */
 
 function authorizedUser(req, res, next) {
-  let user_id = req.signedCookies.email;
+  console.log('in authorizedUser', req.session);
+  let user_id = req.session.email;
   if (user_id) {
     next();
   } else {
