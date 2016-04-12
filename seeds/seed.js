@@ -13,6 +13,7 @@ exports.seed = function(knex, Promise) {
       knex.raw('ALTER SEQUENCE superpowers_id_seq RESTART'),
       knex.raw('ALTER SEQUENCE articles_id_seq RESTART'),
 
+
         // Inserts seed entries
         knex('superpowers').insert({name:'flight', description:'that\'s levitations, homes '}),
         knex('superpowers').insert({name:'mind-bullets', description:'that\'s telekinesis, kyle'}),
@@ -79,9 +80,38 @@ exports.seed = function(knex, Promise) {
         knex('questions').insert({
             title: 'Article 3-- Javascript',
             body: 'A question. A very good question.',
-            user_id: 3
         }),
-        knex('channels').insert({name:'An inaugural channel.'})
-
+        knex('channels').insert({name:'An inaugural channel.'}),
+        knex('replies').insert({
+            body: 'A question. A very good question.',
+            user_id: 2,
+            question_id: 3
+        }),
+        knex('replies').insert({
+            body: 'A question. A very good question.',
+            user_id: 2,
+            question_id: 1
+        }),
+        knex('replies').insert({
+            body: 'A question. A very good question.',
+            user_id: 2,
+            question_id: 2
+        }),
+        knex('messages').insert({
+            body: 'A messages. A very good messages.',
+            user_id: 2
+        }),
+        knex('messages').insert({
+            body: 'A second messages. A very good second messages.',
+            user_id: 4
+        }),
+        knex('messages').insert({
+            body: 'A third messages. A very good  third messages.',
+            user_id: 1
+        }),
+        knex('messages').insert({
+            body: 'A fourth messages. A very good fourth messages.',
+            user_id: 3
+        })
       );
     };
