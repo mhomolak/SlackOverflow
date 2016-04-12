@@ -1,7 +1,7 @@
 exports.seed = function(knex, Promise) {
 
   var superpowersArr =
-  [{name: 'flight', description: 'that\'s levitations, homes '},
+  [{name: 'flight', description: 'that\'s levitations, holmes '},
   {name: 'mind-bullets', description: 'that\'s telekinesis, kyle'},
   {name: 'the power to move you', description: 'RIGAGOOGOORIGGAGOOGOO'}];
 
@@ -20,7 +20,7 @@ exports.seed = function(knex, Promise) {
   var articlesArr = [{name: 'Article 1-- HTML'},
                   {name: 'Article 2-- CSS'},
                   {name: 'Article 3-- Javascript'},
-                  {name: 'Artigle 4-- Learning to Learn'}]
+                  {name: 'Article 4-- Learning to Learn'}]
 
 
 

@@ -33,5 +33,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('users').dropTable('tags').dropTable('channels').dropTable('oauth_services').dropTable('articles');
+  return knex.schema.dropTable('users').dropTable('tags').dropTable('channels').dropTable('oauth_services').dropTable('articles').dropTable('superpowers');
 };
