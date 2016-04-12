@@ -9,8 +9,8 @@ exports.up = function(knex, Promise) {
     table.boolean('admin').defaultTo('false');
     table.string('portrait_url');
     table.string('github_profile_url');
-    table.text('biography')
-    table.integer('superpower_id');
+    table.text('biography');
+    table.integer('superpower_id').references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE');
 
   })
   .createTable('tags', function(table) {
@@ -26,8 +26,12 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('name');
   })
+  .createTable('articles', function(table) {
+    table.increments();
+    table.string('name');
+  })
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('users').dropTable('tags').dropTable('channels').dropTable('oauth_services');
+  return knex.schema.dropTable('users').dropTable('tags').dropTable('channels').dropTable('oauth_services').dropTable('articles');
 };
