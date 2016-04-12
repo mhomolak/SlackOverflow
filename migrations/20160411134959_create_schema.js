@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
     table.string('portrait_url');
     table.string('github_profile_url');
     table.text('biography');
-    table.integer('superpower_id').references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE');
+    table.integer('superpower_id').references('id').inTable('superpowers').onDelete('CASCADE').onUpdate('CASCADE');
 
   })
   .createTable('tags', function(table) {
