@@ -80,12 +80,13 @@ exports.seed = function(knex, Promise) {
         knex('questions').insert({
             title: 'Article 3-- Javascript',
             body: 'A question. A very good question.',
+            user_id: 4
         }),
         knex('channels').insert({name:'An inaugural channel.'}),
         knex('replies').insert({
             body: 'A question. A very good question.',
             user_id: 2,
-            question_id: 3
+            question_id: 1
         }),
         knex('replies').insert({
             body: 'A question. A very good question.',
@@ -95,7 +96,7 @@ exports.seed = function(knex, Promise) {
         knex('replies').insert({
             body: 'A question. A very good question.',
             user_id: 2,
-            question_id: 2
+            question_id: 1
         }),
         knex('messages').insert({
             body: 'A messages. A very good messages.',
