@@ -36,14 +36,4 @@ router.get('/signup', function(req, res, next){
   res.render('signup');
 });
 
-router.get('/:email', authorizedUser, function(req, res, next){
-  Users().where('email', req.params.email).first().then(function(user){
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(401).json({ message: 'User does not exist.' });
-    }
-  });
-});
-
 module.exports = router;
