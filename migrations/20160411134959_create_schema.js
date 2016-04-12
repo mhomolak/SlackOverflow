@@ -7,6 +7,11 @@ exports.up = function(knex, Promise) {
     table.string('email');
     table.datetime('date');
     table.boolean('admin').defaultTo('false');
+    table.string('portrait_url');
+    table.string('github_profile_url');
+    table.text('biography')
+    table.integer('superpower_id');
+
   })
   .createTable('tags', function(table) {
     table.increments();
@@ -24,5 +29,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('users').dropTable('tags').dropTable('channels').dropTable('oauth_services');  
+  return knex.schema.dropTable('users').dropTable('tags').dropTable('channels').dropTable('oauth_services');
 };
