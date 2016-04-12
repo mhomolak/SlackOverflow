@@ -35,7 +35,7 @@ exports.seed = function(knex, Promise) {
 
     knex('messages').insert(messagesArr),
     knex('questions').insert(questionsArr),
-    // knex('tags_users').insert(tags_usersArr)
+    knex('tags_users').insert(tags_usersArr),
     knex('channels_users').insert(channels_usersArr),
     knex('users_oauth').insert(users_oauthArr)
 
