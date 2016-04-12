@@ -37,6 +37,13 @@ router.get('/signup', function(req, res, next){
   res.render('signup');
 });
 
+router.get('/channels', function(req, res, next) {
+  knex('channels')
+  .then(function(results) {
+    res.render('channels', {title: "k", channels: results});
+  })
+});
+
 router.get('/:email', authorizedUser, function(req, res, next){
   Users().where('email', req.params.email).first().then(function(user){
     if (user) {
