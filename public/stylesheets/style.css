@@ -108,3 +108,27 @@ textarea {
 .paddingDiv {
   height: 20px;
 }
+
+.articleDiv {
+  margin: 0 auto;
+  position: relative;
+  width: 900px;
+  background-color: #f2f2f2;
+  border: 1px solid #999999;
+}
+
+.articleTable {
+  width: 900px;
+}
+
+.articleTable tr th {
+  text-align: center;
+  border: 1px solid #999999;
+  width: 150px;
+}
+
+.articleTable tr td {
+  text-align: center;
+  border: 1px solid #999999;
+  padding: 10px;
+}
