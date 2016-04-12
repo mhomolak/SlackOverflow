@@ -8,9 +8,10 @@ router.get('/', function(req, res, next) {
 
 router.get('/articles/:articlesID', function(req, res, next) {
   res.render('articles');
+
 });
 
-router.get('/thread/:threadID', function(req, res, next) {
+router.get('/question/:threadID', function(req, res, next) {
   res.render('thread');
 });
 

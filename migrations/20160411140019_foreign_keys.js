@@ -23,5 +23,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('messages').dropTable('questions').dropTable('replies');
+  return knex.schema.dropTable('messages').dropTable('replies').dropTable('questions');
 };
