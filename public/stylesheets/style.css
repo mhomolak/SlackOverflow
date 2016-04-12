@@ -42,9 +42,18 @@ button {
   padding: 5px;
 }
 
-.profileTable{
+.profileDiv{
+  margin: 0 auto;
+  position: relative;
+  width: 500px;
+  background-color: #f2f2f2;
+  border: 1px solid #999999;
   margin-left: 500px;
   margin-top: 110px;
+}
+
+.profileTable{
+  width: 500px;
 }
 
       .profileTable tr th {
@@ -140,4 +149,26 @@ input[type="button"] {
   text-align: center;
   border: 1px solid #999999;
   padding: 10px;
+}
+
+.tagDiv {
+  margin: 0 auto;
+  position: relative;
+  /*width: 300px;*/
+  /*border: 1px solid #999999;*/
+  text-align: left;
+  padding: 5px;
+}
+
+.tagList {
+  list-style-type: none;
+  font-size: 20px;
+}
+
+.tagList li {
+  background-color: #f2f2f2;
+  float: left;
+  padding: 5px;
+  width: 19%;
+  margin: 5px 5px;
 }
