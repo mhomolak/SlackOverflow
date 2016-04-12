@@ -13,6 +13,11 @@ a {
   color: black;
   margin-top: 60px;
 }
+
+button {
+  background-color: #a6a6a6;
+}
+
 .editButton{
   text-align: center;
   font-size: 15px;
@@ -94,7 +99,7 @@ a {
 .buttonDiv {
   text-align: center;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
 
 .interests {
@@ -106,7 +111,11 @@ textarea {
 }
 
 .paddingDiv {
-  height: 20px;
+  height: 100px;
+}
+
+input[type="button"] {
+  background-color: #b3b3b3;
 }
 
 .articleDiv {
