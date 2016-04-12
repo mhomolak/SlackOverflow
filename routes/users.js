@@ -39,10 +39,32 @@ router.get('/superpowers/:ID', function(req, res, next) {
     res.render('superpowers', {superpowers: superpowers});
   })
 });
+
 router.get('/channels', function(req, res, next) {
   knex('channels')
   .then(function(results) {
+    console.log(results);
     res.render('channels', {title: "Channels", channels: results});
+  })
+});
+
+router.get('/channels_users', function(req, res, next) {
+  knex('channels').reduce(function ( channel_arr, channel ){
+    return knex('users')
+    .innerJoin('channels_users', 'users.id', 'channels_users.user_id')
+    .where({channel_id: channel.id})
+    .reduce(function ( user_arr, channel ){
+      user_arr.push(channel);
+      return user_arr;
+    }, [] ).then(function ( users ){
+      channel.users = users;
+      channel_arr.push(channel);
+      return channel_arr;
+    })
+  }, [])
+  .then(function ( channels ){
+    console.log(channels);
+    res.render('channels', { channels: channels })
   })
 });
 
@@ -60,20 +82,20 @@ module.exports = router;
 
 //reduce method for collectiong data from lookup tables
 // router.get('/articles', function(req, res, next) {
-//     knex('articles').reduce(function ( article_arr, article ){
-//       return knex('questions')
-//       .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
-//       .where({article_id: article.id})
-//       .reduce(function ( question_arr, question ){
-//         question_arr.push(question);
-//         return question_arr;
-//       }, [] ).then(function ( questions ){
-//         article.questions = questions;
-//         article_arr.push(article);
-//         return article_arr;
-//       })
-//     }, [])
-//     .then(function ( articles ){
-//       res.render('articles', { articles: articles })
-//     })
+    // knex('articles').reduce(function ( article_arr, article ){
+    //   return knex('questions')
+    //   .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
+    //   .where({article_id: article.id})
+    //   .reduce(function ( question_arr, question ){
+    //     question_arr.push(question);
+    //     return question_arr;
+    //   }, [] ).then(function ( questions ){
+    //     article.questions = questions;
+    //     article_arr.push(article);
+    //     return article_arr;
+    //   })
+    // }, [])
+    // .then(function ( articles ){
+    //   res.render('articles', { articles: articles })
+    // })
 // });
