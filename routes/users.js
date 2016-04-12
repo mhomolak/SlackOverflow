@@ -57,10 +57,24 @@ router.get('/users', function(req, res, next) {
   })
 });
 
+router.get('/articles/:articlesID', function(req, res, next) {
+  res.render('articles');
+});
 
-
-router.get('/question/:threadID', function(req, res, next) {
+router.get('/questions/:threadID', function(req, res, next) {
   res.render('thread');
+});
+
+router.get('/articles/tagged/:tagId', function(req, res, next) {
+  // res.render('thread');
+});
+
+router.get('/tags', function(req, res, next) {
+  // KNEX(TAGS).THEN(FUNCTION(TAGS){
+    // res.render('tags', { tags: TAGS } );
+    // res.render('tags', { tags: ['Eggplant','Peaches','Spicy Eggplant','Chili Pepper','Banana','Hot Dog','Corn on the Cob','Hair Flip'] } );
+    res.render('tags', { tags: [{id: 1, name: 'Eggplant'},{id: 2, name: 'Peaches'},{id: 3, name: 'Spicy Eggplant'}] } );
+  // })
 });
 
 router.get('/profile/:userID', function(req, res, next) {
