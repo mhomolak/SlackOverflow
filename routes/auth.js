@@ -13,7 +13,9 @@ router.post('/signup', function(req, res, next) {
       let hash = bcrypt.hashSync(req.body.password, 10);
       Users().insert({
           email: req.body.email,
-          password: hash
+          password: hash,
+          name: req.body.name,
+          admin: req.body.admin
       }).then(function(){
         req.session.email = req.body.email;
         req.session.save();
@@ -44,7 +46,7 @@ router.post('/login', function(req, res, next) {
 
 router.get('/logout', function(req, res) {
   res.clearCookie('session');
-  res.redirect('/');
+  res.redirect('/login');
 });
 
 module.exports = router;
