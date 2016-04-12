@@ -47,14 +47,13 @@ knex.from('articles').where('articles.id', req.params.articlesID)
   });
 // console.log(bigArray);
 
-=======
 router.get('/users', function(req, res, next) {
   knex('users')
   .then(function(users){
     res.render('users', {users: users});
   })
 });
->>>>>>> c21e422f3f645ee28c8287a51467beb44f432f5b
+
 
 
 router.get('/question/:threadID', function(req, res, next) {
