@@ -80,7 +80,8 @@ exports.seed = function(knex, Promise) {
             title: 'Article 3-- Javascript',
             body: 'A question. A very good question.',
             user_id: 3
-        })
+        }),
+        knex('channels').insert({name:'An inaugural channel.'})
 
       );
     };
