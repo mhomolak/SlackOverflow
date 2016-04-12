@@ -23,4 +23,11 @@ router.get('/profile/:userID/edit', function(req, res, next) {
   res.render('edit');
 });
 
+router.get('/superpowers', function(req, res, next) {
+  res.render('superpowers');
+});
+router.get('/superpowers/:superpowerID', function(req, res, next) {
+  res.render('superpowers');
+});
+
 module.exports = router;
