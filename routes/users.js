@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var knex = require('../db/knex');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -24,10 +25,30 @@ router.get('/profile/:userID/edit', function(req, res, next) {
 });
 
 router.get('/superpowers', function(req, res, next) {
-  res.render('superpowers');
+  knex('superpowers')
+  .then(function(superpowers){
+    res.render('superpowers', {superpowers: superpowers});
+  })
 });
-router.get('/superpowers/:superpowerID', function(req, res, next) {
-  res.render('superpowers');
+router.get('/superpowers/:ID', function(req, res, next) {
+  knex('superpowers').where({'id': req.params.ID})
+  .then(function(superpowers){
+    res.render('superpowers', {superpowers: superpowers});
+  })
+});
+router.get('/channels', function(req, res, next) {
+  knex('channels')
+  .then(function(results) {
+    res.render('channels', {title: "Channels", channels: results});
+  })
+});
+
+router.get('/messages', function(req, res, next) {
+  knex('messages')
+  .then(function(results) {
+    console.log(results);
+    res.render('messages', {title: "Messages", messages: results});
+  })
 });
 
 module.exports = router;
