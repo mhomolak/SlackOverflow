@@ -19,8 +19,6 @@ router.post('/signup', function(req, res, next) {
       }).then(function(){
         req.session.email = req.body.email;
         req.session.save();
-        // req.setCookie('test','test');
-        // req.session.test = "test";
       }).then(function(){
         res.redirect('/');
       })
