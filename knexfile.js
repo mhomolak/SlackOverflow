@@ -2,7 +2,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/slackoverflow'
+    connection: 'postgres://localhost/slack-overflow'
   },
 
   production: {
