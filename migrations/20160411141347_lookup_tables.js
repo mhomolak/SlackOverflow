@@ -25,8 +25,12 @@ exports.up = function(knex, Promise) {
     table.integer('tag_id').references('id').inTable('tags').onDelete('CASCADE').onUpdate('CASCADE');
     table.integer('article_id').references('id').inTable('articles').onDelete('CASCADE').onUpdate('CASCADE');
   })
+  .createTable('tags_users', function(table) {
+    table.integer('tag_id').references('id').inTable('tags').onDelete('CASCADE').onUpdate('CASCADE');
+    table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE');
+  })
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('channels_users').dropTable('replies_votes').dropTable('users_oauth').dropTable('tags_questions').dropTable('tags_articles').dropTable('articles_questions');
+  return knex.schema.dropTable('channels_users').dropTable('replies_votes').dropTable('users_oauth').dropTable('tags_questions').dropTable('tags_articles').dropTable('articles_questions').dropTable('tags_users');
 };

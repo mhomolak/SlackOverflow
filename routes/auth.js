@@ -19,9 +19,6 @@ router.post('/signup', function(req, res, next) {
       }).then(function(){
         req.session.email = req.body.email;
         req.session.save();
-        console.log(req.session);
-        // req.setCookie('test','test');
-        // req.session.test = "test";
       }).then(function(){
         res.redirect('/');
       })
@@ -37,7 +34,7 @@ router.post('/login', function(req, res, next) {
   }).first().then(function(user) {
     if ( user && bcrypt.compareSync(req.body.password, user.password) ) {
       req.session.email = user.email;
-      res.redirect('/');
+      res.redirect('../users');
     } else {
       res.redirect('/login');
     }
