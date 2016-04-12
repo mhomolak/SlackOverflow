@@ -30,16 +30,81 @@ a {
   float: left;
 }
 
+.smallProfPic {
+  width:250px;
+  height: 250px;
+  border: solid black 2px;
+  padding: 5px;
+}
+
 .profileTable{
   margin-left: 500px;
   margin-top: 110px;
 }
 
-      .profileTable th {
+      .profileTable tr th {
         border: 1px solid lightgray;
         padding: 10px;
       }
-      .profileTable td {
+      .profileTable tr td {
         border: 1px solid lightgray;
         padding: 10px;
       }
+
+.dashTable {
+  text-align: center;
+  width: 400px;
+  border-radius: 25px;
+}
+
+.buttonRow {
+  text-align: center;
+  border: 1px solid #999999;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.dashTable {
+  width: 500px;
+}
+
+.dashTable tr th {
+  text-align: center;
+  border: 1px solid #999999;
+  width: 150px;
+}
+
+.dashTable tr td {
+  text-align: center;
+  border: 1px solid #999999;
+  padding: 10px;
+}
+
+.dashDiv {
+  margin: 0 auto;
+  position: relative;
+  width: 500px;
+  background-color: #f2f2f2;
+  border: 1px solid #999999;
+}
+.uploadPic {
+  margin-top: 5px;
+}
+
+.buttonDiv {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.interests {
+  height: 100px;
+}
+
+textarea {
+  width: 250px;
+}
+
+.paddingDiv {
+  height: 20px;
+}

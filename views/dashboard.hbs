@@ -1,12 +1,51 @@
 
-<h1 class="specialHead">Dashboard</h1>
 
+<div class="paddingDiv">
+
+</div>
+
+<div class="dashDiv">
+  <h1 class="specialHead">Dashboard</h1>
 <form class="" action="index.html" method="post">
-  <table class="dashTable">
-    <tr>
 
-    </tr>
-
+  <div class="buttonDiv">
     <input type="button" name="name" value="Edit Your Profile" class="editButton">
+    <br>
+    <p>
+      (Click button to show edit table below)
+    </p>
+  </div>
+
+  <table class="dashTable">
+  <tr>
+    <th>First Name:</th>
+    <td><input type="text" name="name" value="Fabio" width="70px"></td>
+  </tr>
+  </tr>
+    <th>Last Name:</th>
+    <td><input type="text" name="name" value="Anselmo" width="70px"></td>
+  </tr>
+  <tr>
+      <th>Username:</th>
+      <td><input type="text" name="name" value="saltyfabs" width="70px"></td>
+  </tr>
+    <th>Location</th>
+    <td><input type="text" name="name" value="Boulder, CO" width="70px"></td>
+  </tr>
+  </tr>
+    <th>Interests</th>
+    <td><textarea rows="4" cols="1">Spicy eggplant, bragging about being poor, giving questionable life advice, white person raps</textarea></td>
+  </tr>
+  </tr>
+    <th>GitHub Profile</th>
+    <td><input type="text" name="name" value="fabio@fabio.com" width="70px"></td>
+  </tr>
+  </tr>
+    <th>Profile Picture</th>
+    <td><img src="{{profilePic}}" alt="" class="smallProfPic"/><br><input type="button" name="name" value="Upload" class="uploadPic"></td>
+  </tr>
+  <tr class="buttonRow"><td colspan="2"><input type="button" name="name" value="Submit Changes" class="submitButton"></td></tr>
+  </tr>
   </table>
 </form>
+</div>
