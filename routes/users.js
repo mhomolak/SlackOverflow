@@ -143,11 +143,8 @@ router.get('/profile/:userID/edit', function(req, res, next) {
     })
 });
 
-
-
 router.get('/superpowers', function(req, res, next) {
   knex('superpowers')
-<<<<<<< HEAD
   .then(function(superpowers){
     return knex('articles')
     .then(function(articles){
@@ -346,9 +343,12 @@ router.get('/articles', function(req, res, next) {
 
 router.get('/tags', function(req, res, next) {
   knex('tags').then(function(tags) {
-    res.render('tags', {
-      tags: tags
-    });
+    return knex('articles')
+    .then(function(articles){
+      res.render('tags', {
+        tags: tags, articles: articles
+      });
+    })
   });
 });
 
@@ -420,9 +420,12 @@ router.get('/tags/:id', function(req, res, next) {
       'id': req.params.id
     })
     .then(function(tags) {
-      res.render('tags', {
-        tags: tags
-      });
+      return knex('articles')
+      .then(function(articles){
+        res.render('tags', {
+          tags: tags, articles: articles
+        });
+      })
     });
 });
 
@@ -446,8 +449,11 @@ router.get('/questions/tags/:name', function(req, res, next) {
         })
     }, [])
     .then(function(tags) {
-      res.render('questiontags', {
-        tags: tags
+      return knex('articles')
+      .then(function(articles){
+        res.render('questiontags', {
+          tags: tags, articles: articles
+        })
       })
     })
 });
@@ -472,8 +478,11 @@ router.get('/articles/tags/:name', function(req, res, next) {
         })
     }, [])
     .then(function(tags) {
-      res.render('articletags', {
-        tags: tags
+      return knex('articles')
+      .then(function(articles){
+        res.render('articletags', {
+          tags: tags, articles: articles
+        })
       })
     })
 });
@@ -498,8 +507,11 @@ router.get('/users/tags/:name', function(req, res, next) {
         })
     }, [])
     .then(function(tags) {
-      res.render('usertags', {
-        tags: tags
+      return knex('articles')
+      .then(function(articles){
+        res.render('usertags', {
+          tags: tags, articles: articles
+        })
       })
     })
 });
