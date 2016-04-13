@@ -1,3 +1,4 @@
+require('dotenv').load();
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -10,7 +11,6 @@ const linkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const routes = require('./routes/index');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
-const dotenv = require('dotenv');
 const app = express();
 
 const cors = require('cors');
