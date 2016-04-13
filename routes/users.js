@@ -185,26 +185,6 @@ router.get('/messages', function(req, res, next) {
   })
 });
 
-// router.get('/articles_questions', function(req, res, next) {
-//   knex('articles').reduce(function ( article_arr, article ){
-//     return knex('questions')
-//     .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
-//     .where({article_id: article.id})
-//     .reduce(function ( question_arr, question ){
-//       question_arr.push(question);
-//       return question_arr;
-//     }, [] ).then(function ( questions ){
-//       article.questions = questions;
-//       article_arr.push(article);
-//       return article_arr;
-//     })
-//   }, [])
-//   .then(function ( articles ){
-//     console.log(articles);
-//     res.render('articles', { articles: articles })
-//   })
-// });
-
 router.get('/oauth_services', function(req, res, next) {
   knex('oauth_services').reduce(function ( oauth_services_arr, strategy ){
     return knex('users')
@@ -244,8 +224,9 @@ router.get('/articles_questions', function(req, res, next) {
 });
 
 router.get('/tags', function(req, res, next) {
-  knex(tags).then(function(tags){
-  res.render('tags', {tags: tags);
+  knex('tags').then(function(tags){
+  res.render('tags', {tags: tags});
+  });
 });
 
 router.get('/tags_questions', function(req, res, next) {
@@ -270,7 +251,7 @@ router.get('/tags_questions', function(req, res, next) {
 router.get('/tags_articles', function(req, res, next) {
     knex('tags').reduce(function ( tag_arr, tag ){
       return knex('articles')
-      .innerJoin('tags_articles', 'articles.id', 'tags_articles.question_id')
+      .innerJoin('tags_articles', 'articles.id', 'tags_articles.article_id')
       .where({tag_id: tag.id})
       .reduce(function ( article_arr, article ){
         article_arr.push(article);
@@ -289,7 +270,7 @@ router.get('/tags_articles', function(req, res, next) {
 router.get('/tags_users', function(req, res, next) {
     knex('tags').reduce(function ( tag_arr, tag ){
       return knex('users')
-      .innerJoin('tags_users', 'users.id', 'tags_users.question_id')
+      .innerJoin('tags_users', 'users.id', 'tags_users.user_id')
       .where({tag_id: tag.id})
       .reduce(function ( user_arr, user ){
         user_arr.push(user);
@@ -306,9 +287,10 @@ router.get('/tags_users', function(req, res, next) {
 });
 
 router.get('/tags/:id', function(req, res, next) {
-  knex(tags).where({'id': req.params.id})
+  knex('tags').where({'id': req.params.id})
   .then(function(tags){
-  res.render('tags', {tags: tags);
+  res.render('tags', {tags: tags});
+  });
 });
 
 router.get('/tags_questions/:name', function(req, res, next) {
@@ -335,7 +317,7 @@ router.get('/tags_articles/:name', function(req, res, next) {
     knex('tags').where({'name':req.params.name})
     .reduce(function ( tag_arr, tag ){
       return knex('articles')
-      .innerJoin('tags_articles', 'articles.id', 'tags_articles.question_id')
+      .innerJoin('tags_articles', 'articles.id', 'tags_articles.article_id')
       .where({tag_id: tag.id})
       .reduce(function ( article_arr, article ){
         article_arr.push(article);
@@ -355,7 +337,7 @@ router.get('/tags_users/:name', function(req, res, next) {
     knex('tags').where({'name':req.params.name})
     .reduce(function ( tag_arr, tag ){
       return knex('users')
-      .innerJoin('tags_users', 'users.id', 'tags_users.question_id')
+      .innerJoin('tags_users', 'users.id', 'tags_users.user_id')
       .where({tag_id: tag.id})
       .reduce(function ( user_arr, user ){
         user_arr.push(user);

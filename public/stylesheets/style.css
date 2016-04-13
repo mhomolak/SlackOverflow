@@ -222,3 +222,13 @@ input[type="button"] {
   width: 19%;
   margin: 5px 5px;
 }
+
+.showme{
+display: none;
+}
+.showhim:hover .showme{
+display : block;
+}
+.showhim:hover .ok{
+display : none;
+}

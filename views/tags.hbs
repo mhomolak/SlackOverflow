@@ -5,11 +5,17 @@
 <div class="tagDiv">
 
   <ul class="tagList">
-
+    {{#if tags}}
     {{#each tags}}
-      <li> <a href="/articles/tagged/{{this.id}}">{{this.name}}</a> </li>
+      <li><div class="showhim">
+        <a href="/users/tags/{{this.id}}">{{this.name}}</a>
+        <div class="showme"><p>{{this.description}}</p></div>
+        <div class="ok">...</div>
+      </div></li>
     {{/each}}
-
+    {{else}}
+    <h2>There arent any associations yet</h2>
+    {{/if}}
   </ul>
 
 </div>
