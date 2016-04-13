@@ -119,7 +119,7 @@ router.get('/profile/:userID/edit', function(req, res, next) {
 });
 
 
-//experiment knex
+
 router.get('/superpowers', function(req, res, next) {
   knex('superpowers')
   .then(function(superpowers){
@@ -150,8 +150,13 @@ router.get('/superpowers/:ID', function(req, res, next) {
 router.get('/channels', function(req, res, next) {
   knex('channels')
   .then(function(results) {
-    console.log(results);
-    res.render('channels', {title: "Channels", channels: results});
+    return knex('articles')
+    .then(function(articles){
+      console.log(results);
+      res.render('channels', {
+        title: "Channels", channels: results, articles: articles
+      });
+    })
   })
 });
 
@@ -170,8 +175,13 @@ router.get('/channels_users', function(req, res, next) {
     })
   }, [])
   .then(function ( channels ){
-    console.log(channels);
-    res.render('channels', { channels: channels })
+    return knex('articles')
+    .then(function(articles){
+      console.log(channels);
+      res.render('channels', {
+        channels: channels, articles: articles
+       });
+    })
   })
 });
 
@@ -190,28 +200,20 @@ router.get('/replies_votes', function(req, res, next) {
       })
     }, [])
     .then(function ( replies ){
-      console.log(replies);
-      res.render('votes', { replies: replies })
+      return knex('articles')
+      .then(function(articles){
+        console.log(replies);
+        res.render('votes', {
+          replies: replies, articles: articles
+        });
+      })
     })
 });
 
 
-//need to add knex('articles')?
-//this right here is the original code to be preserved:
-// router.get('/messages', function(req, res, next) {
-//   knex('messages')
-//   .then(function(results) {
-//     console.log(results);
-//     res.render('messages', {title: "Messages", messages: results});
-//   })
-// });
-
-
-//took the above and added knex('articles')
 router.get('/messages', function(req, res, next) {
   knex('messages')
   .then(function(results) {
-
     return knex('articles')
     .then(function(articles){
       res.render('messages', {
@@ -221,30 +223,7 @@ router.get('/messages', function(req, res, next) {
       });
     });
   })
-
 });
-
-
-//sample knex articles to add:
-
-// router.get('/profile/:userID/edit', function(req, res, next) {
-//   knex('articles')
-//   .then(function(articles){
-//     res.render('edit', { articles: articles});
-//   })
-// });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

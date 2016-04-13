@@ -267,7 +267,6 @@ input[type="button"] {
 
 .tagList {
   list-style-type: none;
-  font-size: 20px;
 }
 
 .tagList li {
@@ -276,11 +275,13 @@ input[type="button"] {
   color: white;
   float: left;
   padding: 6px;
-  width: 10%;
+  width: 14%;
   margin: 5px;
   text-align: center;
   border-radius: 15px;
   font-family: pacifico;
+  text-shadow: 2px 2px black;
+  font-size: 25px;
 }
 .ok > img{
   width: 3em;
@@ -289,9 +290,11 @@ input[type="button"] {
 }
 .showhim a {
   color:white;
+  text-decoration: none;
 }
 .showhim a:hover {
   color:silver;
+  text-decoration: none;
 }
 .showme{
 display: none;
@@ -306,6 +309,7 @@ display : none;
   text-align: center;
   border: 1px solid black;
 }
+
 .heads {
   height: 40px;
   width: 40px;
@@ -316,19 +320,26 @@ display : none;
 .superpowerDiv {
   padding-top: 30px;
   margin-top: 7%;
-  margin-left: 10%;
+  margin-left: 15%;
   font-size: 20px;
   background-color: #e6e6e6;
   border-radius: 25px;
+  width: 70%;
 }
 
 .powersTable  {
   margin-left: 10%;
-  width: 70%;
+  width: 100%;
 }
 
 .powersTable td {
   padding: 7px;
-  width: 60%;
+  width: 65%;
   padding-left: 30px;
+}
+
+.votesDiv{
+  margin-top: 7%;
+  margin-left: 5%;
+  font-size: 20px;
 }
