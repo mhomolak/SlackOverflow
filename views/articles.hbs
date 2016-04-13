@@ -1,30 +1,26 @@
-<!-- <h1 class="specialHead">{{title}}</h1>
-
-<div class="paddingDiv"></div>
-<h1 class="specialHead">Articles</h1>
-
-
-
+<h1 class="specialHead">{{title}}</h1>
 
 <div class="paddingDiv"></div>
 <div class="articleDiv">
-  <table class="articleTable">
-    <tr>
-      <th>Topic</th>
-      <th>Author</th>
-      <th>Number of Posts</th>
-      <th>Most Recent Post</th>
-    </tr>
-    <tr>
-      <td><a href='/users/question/{{question_id}}'>{{this.title}}</a></td>
-      <td><a href='/users/profile/{{user_id}}'>{{this.user_id}}</a></td>
-      <td>{{this.created_at}}</td>
-      <td>{{this.name}}</td>
-    </tr>
-  </div>
-  </table> -->
+ <table class="articleTable">
+   <tr>
+     <th>Topic</th>
+     <th>Author</th>
+     <th>Number of Posts</th>
+     <th>Most Recent Post</th>
+   </tr>
+   {{#data}}
+   <tr>
+     <td><a href='/users/question/{{question_id}}'>{{title}}</a></td>
+     <td><a href='/users/profile/{{user_id}}'>{{name}}</a></td>
+     <td>{{count}}</td>
+     <td>{{date}}</td>
+   </tr>
+   {{/data}}
+ </table>
+</div>
 
-    {{#articles}}
+    <!-- {{#articles}}
     <h2>{{this.name}}</h2>
   </br>
   {{this.id}}
@@ -44,4 +40,4 @@
     {{/this.questions}}
   </br>
 </br>
-    {{/articles}}
+    {{/articles}} -->
