@@ -8,6 +8,8 @@ router.get('/', function(req, res, next) {
   res.render('loggedin');
 });
 
+
+
 router.get('/articles/:articlesID', function(req, res, next) {
 var bigArray = [];
 knex.from('articles').where('articles.id', req.params.articlesID)
@@ -77,13 +79,30 @@ router.get('/tags', function(req, res, next) {
   // })
 });
 
+// router.get('/profile/:userID', function(req, res, next) {
+//   res.render('profile');
+// });
+
+//experimenting with knex
 router.get('/profile/:userID', function(req, res, next) {
-  res.render('profile');
+  knex('articles')
+  .then(function(articles){
+    res.render('profile', { articles: articles});
+  })
 });
 
+
 router.get('/profile/:userID/edit', function(req, res, next) {
-  res.render('edit');
+  knex('articles')
+  .then(function(articles){
+    res.render('edit', { articles: articles});
+  })
 });
+
+
+
+
+
 
 router.get('/superpowers', function(req, res, next) {
   knex('superpowers')
@@ -146,6 +165,8 @@ router.get('/replies_votes', function(req, res, next) {
     })
 });
 
+
+//need to add knex('articles')?
 router.get('/messages', function(req, res, next) {
   knex('messages')
   .then(function(results) {
@@ -176,7 +197,6 @@ router.get('/articles_questions', function(req, res, next) {
       })
     }, [])
     .then(function ( articles ){
-      console.log(articles);
       res.render('articles', { articles: articles })
     })
 });

@@ -25,9 +25,15 @@
       <div class="headPad"></div>
     </div>
   </div>
-  <div class="navbar navbar-left bg-info">
-    Stuff here.
+  <div class="navbar navbar-left bg-info sideBar">
+    {{#articles}}
+        <h2>{{this.name}}</h2>
+          </br>
+        {{this.title}}
+    {{/articles}}
   </div>
+
+
   {{{body}}}
 
 
