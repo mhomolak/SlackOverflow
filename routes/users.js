@@ -87,7 +87,13 @@ router.get('/tags', function(req, res, next) {
 });
 
 router.get('/profile/:userID', function(req, res, next) {
-  res.render('profile');
+  knex('users').select('users.name as user_name', '*')
+  .innerJoin('superpowers', 'users.superpower_id', 'superpowers.id')
+  .where('users.id', req.params.userID).first()
+  .then(function(results){
+    console.log(results)
+    res.render('profile', {data:results});
+  })
 });
 
 router.get('/profile/:userID/edit', function(req, res, next) {
