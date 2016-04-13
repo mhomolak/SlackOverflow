@@ -4,6 +4,7 @@ const router = express.Router();
 const knex = require('../db/knex');
 const bcrypt = require('bcrypt');
 const Users = function() { return knex('users') };
+const Recaptcha = require('recaptcha').Recaptcha;
 
 
 /* GET home page. */
@@ -33,7 +34,21 @@ router.get('/login', function(req, res, next){
 });
 
 router.get('/signup', function(req, res, next){
-  res.render('signup');
+
+      var recaptcha = new Recaptcha('6LcbRR0TAAAAAO-9iVrVVpL3y17E6RKE0_2NkRi7', '6LcbRR0TAAAAAMNLl0CVq4Ru-36TChTkQlIYoF-P');
+
+      console.log(recaptcha.toHTML());
+
+      res.render('signup', {
+      locals: {
+          recaptcha_form: recaptcha.toHTML()
+      }
+    });
+
+});
+
+router.get('/test', function(req,res,next){
+  res.json('RESPONSEEEEEEEEEE');
 });
 
 module.exports = router;
