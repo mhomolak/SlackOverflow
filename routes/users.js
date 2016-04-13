@@ -80,13 +80,6 @@ router.get('/articles/tagged/:tagId', function(req, res, next) {
   // res.render('thread');
 });
 
-router.get('/tags', function(req, res, next) {
-  // KNEX(TAGS).THEN(FUNCTION(TAGS){
-    // res.render('tags', { tags: TAGS } );
-    // res.render('tags', { tags: ['Eggplant','Peaches','Spicy Eggplant','Chili Pepper','Banana','Hot Dog','Corn on the Cob','Hair Flip'] } );
-    res.render('tags', { tags: [{id: 1, name: 'Eggplant'},{id: 2, name: 'Peaches'},{id: 3, name: 'Spicy Eggplant'}] } );
-  // })
-});
 
 // router.get('/profile/:userID', function(req, res, next) {
 //   res.render('profile');
@@ -182,25 +175,6 @@ router.get('/replies_votes', function(req, res, next) {
     })
 });
 
-router.get('/replies_votes', function(req, res, next) {
-    knex('replies').reduce(function ( reply_arr, reply ){
-      return knex('users')
-      .innerJoin('replies_votes', 'users.id', 'replies_votes.user_id')
-      .where({reply_id: reply.id})
-      .reduce(function ( user_arr, user ){
-        user_arr.push(user);
-        return user_arr;
-      }, [] ).then(function ( users ){
-        reply.users = users;
-        reply_arr.push(reply);
-        return reply_arr;
-      })
-    }, [])
-    .then(function ( replies ){
-      console.log(replies);
-      res.render('votes', { replies: replies })
-    })
-});
 
 //need to add knex('articles')?
 router.get('/messages', function(req, res, next) {
@@ -231,9 +205,24 @@ router.get('/messages', function(req, res, next) {
 //   })
 // });
 
-
-
-
+router.get('/oauth_services', function(req, res, next) {
+  knex('oauth_services').reduce(function ( oauth_services_arr, strategy ){
+    return knex('users')
+    .innerJoin('users_oauth', 'users.id', 'users_oauth.user_id')
+    .where({oauth_id: strategy.id})
+    .reduce(function ( user_arr, user ){
+      user_arr.push(user);
+      return user_arr;
+    }, [] ).then(function ( users ){
+      strategy.users = users;
+      oauth_services_arr.push(strategy);
+      return oauth_services_arr;
+    })
+  }, [])
+  .then(function ( oauth_services ){
+    res.json(oauth_services);
+  })
+});
 
 router.get('/articles_questions', function(req, res, next) {
     knex('articles').reduce(function ( article_arr, article ){
@@ -251,6 +240,134 @@ router.get('/articles_questions', function(req, res, next) {
     }, [])
     .then(function ( articles ){
       res.render('articles', { articles: articles })
+    })
+});
+
+router.get('/tags', function(req, res, next) {
+  knex(tags).then(function(tags){
+  res.render('tags', {tags: tags);
+});
+
+router.get('/tags_questions', function(req, res, next) {
+    knex('tags').reduce(function ( tag_arr, tag ){
+      return knex('questions')
+      .innerJoin('tags_questions', 'questions.id', 'tags_questions.question_id')
+      .where({tag_id: tag.id})
+      .reduce(function ( question_arr, question ){
+        question_arr.push(question);
+        return question_arr;
+      }, [] ).then(function ( questions ){
+        tag.questions = questions;
+        tag_arr.push(tag);
+        return tag_arr;
+      })
+    }, [])
+    .then(function ( tags ){
+      res.render('tags', { tags: tags })
+    })
+});
+
+router.get('/tags_articles', function(req, res, next) {
+    knex('tags').reduce(function ( tag_arr, tag ){
+      return knex('articles')
+      .innerJoin('tags_articles', 'articles.id', 'tags_articles.question_id')
+      .where({tag_id: tag.id})
+      .reduce(function ( article_arr, article ){
+        article_arr.push(article);
+        return article_arr;
+      }, [] ).then(function ( articles ){
+        tag.articles = articles;
+        tag_arr.push(tag);
+        return tag_arr;
+      })
+    }, [])
+    .then(function ( tags ){
+      res.render('tags', { tags: tags })
+    })
+});
+
+router.get('/tags_users', function(req, res, next) {
+    knex('tags').reduce(function ( tag_arr, tag ){
+      return knex('users')
+      .innerJoin('tags_users', 'users.id', 'tags_users.question_id')
+      .where({tag_id: tag.id})
+      .reduce(function ( user_arr, user ){
+        user_arr.push(user);
+        return user_arr;
+      }, [] ).then(function ( users ){
+        tag.users = users;
+        tag_arr.push(tag);
+        return tag_arr;
+      })
+    }, [])
+    .then(function ( tags ){
+      res.render('tags', { tags: tags })
+    })
+});
+
+router.get('/tags/:id', function(req, res, next) {
+  knex(tags).where({'id': req.params.id})
+  .then(function(tags){
+  res.render('tags', {tags: tags);
+});
+
+router.get('/tags_questions/:name', function(req, res, next) {
+    knex('tags').where({'name':req.params.name})
+    .reduce(function ( tag_arr, tag ){
+      return knex('questions')
+      .innerJoin('tags_questions', 'questions.id', 'tags_questions.question_id')
+      .where({tag_id: tag.id})
+      .reduce(function ( question_arr, question ){
+        question_arr.push(question);
+        return question_arr;
+      }, [] ).then(function ( questions ){
+        tag.questions = questions;
+        tag_arr.push(tag);
+        return tag_arr;
+      })
+    }, [])
+    .then(function ( tags ){
+      res.render('tags', { tags: tags })
+    })
+});
+
+router.get('/tags_articles/:name', function(req, res, next) {
+    knex('tags').where({'name':req.params.name})
+    .reduce(function ( tag_arr, tag ){
+      return knex('articles')
+      .innerJoin('tags_articles', 'articles.id', 'tags_articles.question_id')
+      .where({tag_id: tag.id})
+      .reduce(function ( article_arr, article ){
+        article_arr.push(article);
+        return article_arr;
+      }, [] ).then(function ( articles ){
+        tag.articles = articles;
+        tag_arr.push(tag);
+        return tag_arr;
+      })
+    }, [])
+    .then(function ( tags ){
+      res.render('tags', { tags: tags })
+    })
+});
+
+router.get('/tags_users/:name', function(req, res, next) {
+    knex('tags').where({'name':req.params.name})
+    .reduce(function ( tag_arr, tag ){
+      return knex('users')
+      .innerJoin('tags_users', 'users.id', 'tags_users.question_id')
+      .where({tag_id: tag.id})
+      .reduce(function ( user_arr, user ){
+        user_arr.push(user);
+        return user_arr;
+      }, [] ).then(function ( users ){
+        tag.users = users;
+        tag_arr.push(tag);
+        return tag_arr;
+      })
+    }, [])
+    .then(function ( tags ){
+      res.render('tags', { tags: tags })
     })
 });
 
