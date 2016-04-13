@@ -2,13 +2,10 @@ var express = require('express');
 var router = express.Router();
 var knex = require('knex')(require('../knexfile')['development']);
 
-
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.render('loggedin');
 });
-
-
 
 router.get('/articles/:articlesID', function(req, res, next) {
 var bigArray = [];
