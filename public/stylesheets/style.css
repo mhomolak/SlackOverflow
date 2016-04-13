@@ -97,6 +97,14 @@ a {
   margin-left: 20%;
 }
 
+.containerDiv {
+  margin: 0 auto;
+  margin-left: 20%;
+  position: relative;
+  width: 75%;
+  padding: 20px;
+}
+
 button {
   background-color: #a6a6a6;
 }
@@ -305,12 +313,22 @@ display : none;
   background-color: rgba(0,30,100,.5);
 }
 
-.containerDiv {
-  margin: 0 auto;
-  margin-left: 20%;
-  position: relative;
-  width: 75%;
-  /*background-color: #f2f2f2;
-  border: 1px solid #999999;*/
-  padding: 20px;
+.superpowerDiv {
+  padding-top: 30px;
+  margin-top: 7%;
+  margin-left: 10%;
+  font-size: 20px;
+  background-color: #e6e6e6;
+  border-radius: 25px;
+}
+
+.powersTable  {
+  margin-left: 10%;
+  width: 70%;
+}
+
+.powersTable td {
+  padding: 7px;
+  width: 60%;
+  padding-left: 30px;
 }

@@ -119,21 +119,31 @@ router.get('/profile/:userID/edit', function(req, res, next) {
 });
 
 
-
-
-
-
+//experiment knex
 router.get('/superpowers', function(req, res, next) {
   knex('superpowers')
   .then(function(superpowers){
-    res.render('superpowers', {superpowers: superpowers});
+    return knex('articles')
+    .then(function(articles){
+      res.render('superpowers', {
+      superpowers: superpowers,
+       articles: articles
+    });
+    })
   })
 });
+
 
 router.get('/superpowers/:ID', function(req, res, next) {
   knex('superpowers').where({'id': req.params.ID})
   .then(function(superpowers){
-    res.render('superpowers', {superpowers: superpowers});
+    return knex('articles')
+    .then(function(articles){
+    res.render('superpowers', {
+      superpowers: superpowers,
+       articles: articles
+    });
+    })
   })
 });
 
