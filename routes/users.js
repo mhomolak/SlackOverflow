@@ -204,7 +204,7 @@ router.get('/oauth_services', function(req, res, next) {
   })
 });
 
-router.get('/articles_questions', function(req, res, next) {
+router.get('/articles', function(req, res, next) {
     knex('articles').reduce(function ( article_arr, article ){
       return knex('questions')
       .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
@@ -219,7 +219,7 @@ router.get('/articles_questions', function(req, res, next) {
       })
     }, [])
     .then(function ( articles ){
-      res.render('articles', { articles: articles })
+      res.json(articles);
     })
 });
 
