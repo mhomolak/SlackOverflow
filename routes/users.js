@@ -83,7 +83,7 @@ router.get('/tags', function(req, res, next) {
 //   res.render('profile');
 // });
 
-//experimenting with knex
+
 router.get('/profile/:userID', function(req, res, next) {
   knex('articles')
   .then(function(articles){
@@ -167,13 +167,50 @@ router.get('/replies_votes', function(req, res, next) {
 
 
 //need to add knex('articles')?
+//this right here is the original code to be preserved:
+// router.get('/messages', function(req, res, next) {
+//   knex('messages')
+//   .then(function(results) {
+//     console.log(results);
+//     res.render('messages', {title: "Messages", messages: results});
+//   })
+// });
+
+
+//trying to add second knex table
 router.get('/messages', function(req, res, next) {
   knex('messages')
   .then(function(results) {
-    console.log(results);
-    res.render('messages', {title: "Messages", messages: results});
+
+    return knex('articles')
+    .then(function(articles){
+      res.render('messages', {
+        articles: articles,
+        title: "Messages",
+        messages: results
+      });
+    });
   })
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // router.get('/articles_questions', function(req, res, next) {
 //   knex('articles').reduce(function ( article_arr, article ){
