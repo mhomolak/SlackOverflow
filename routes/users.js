@@ -182,6 +182,25 @@ router.get('/replies_votes', function(req, res, next) {
     })
 });
 
+router.get('/replies_votes', function(req, res, next) {
+    knex('replies').reduce(function ( reply_arr, reply ){
+      return knex('users')
+      .innerJoin('replies_votes', 'users.id', 'replies_votes.user_id')
+      .where({reply_id: reply.id})
+      .reduce(function ( user_arr, user ){
+        user_arr.push(user);
+        return user_arr;
+      }, [] ).then(function ( users ){
+        reply.users = users;
+        reply_arr.push(reply);
+        return reply_arr;
+      })
+    }, [])
+    .then(function ( replies ){
+      console.log(replies);
+      res.render('votes', { replies: replies })
+    })
+});
 
 //need to add knex('articles')?
 router.get('/messages', function(req, res, next) {
