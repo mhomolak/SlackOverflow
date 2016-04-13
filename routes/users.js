@@ -2,13 +2,13 @@ var express = require('express');
 var router = express.Router();
 var knex = require('knex')(require('../knexfile')['development']);
 
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  knex('articles')
-  .then(function(articles){
-    res.render('loggedin', { articles: articles});
-  })
+  res.render('loggedin');
 });
+
+
 
 router.get('/articles/:articlesID', function(req, res, next) {
 var bigArray = [];
@@ -52,7 +52,6 @@ knex.from('articles').where('articles.id', req.params.articlesID)
 
 // console.log(bigArray);
 
-//need to add knex('articles')
 router.get('/users', function(req, res, next) {
   knex('users')
   .then(function(users){
@@ -60,20 +59,8 @@ router.get('/users', function(req, res, next) {
   })
 });
 
-//not working?
-router.get('/articles/:articlesID', function(req, res, next) {
-  knex('articles')
-  .then(function(articles){
-    res.render('articles', { articles: articles});
-  })
-});
-
 
 router.get('/questions/:threadID', function(req, res, next) {
-  knex('articles')
-  .then(function(articles){
-    res.render('thread', { articles: articles});
-  })
   var threadName;
   knex('questions').where('id', req.params.threadID)
     .then(function(threadresults){
@@ -87,6 +74,10 @@ router.get('/questions/:threadID', function(req, res, next) {
         res.render('thread', ({data:results, thread_title:threadName}));
       })
     })
+});
+
+router.get('/articles/tagged/:tagId', function(req, res, next) {
+  // res.render('thread');
 });
 
 
@@ -129,7 +120,6 @@ router.get('/superpowers', function(req, res, next) {
     res.render('superpowers', {superpowers: superpowers});
   })
 });
-
 router.get('/superpowers/:ID', function(req, res, next) {
   knex('superpowers').where({'id': req.params.ID})
   .then(function(superpowers){
@@ -187,85 +177,19 @@ router.get('/replies_votes', function(req, res, next) {
 
 
 //need to add knex('articles')?
-//this right here is the original code to be preserved:
-// router.get('/messages', function(req, res, next) {
-//   knex('messages')
-//   .then(function(results) {
-//     console.log(results);
-//     res.render('messages', {title: "Messages", messages: results});
-//   })
-// });
-
-
-//took the above and added knex('articles')
 router.get('/messages', function(req, res, next) {
   knex('messages')
   .then(function(results) {
-
-    return knex('articles')
-    .then(function(articles){
-      res.render('messages', {
-        articles: articles,
-        title: "Messages",
-        messages: results
-      });
-    });
+    console.log(results);
+    res.render('messages', {title: "Messages", messages: results});
   })
-
 });
-
-
-//sample knex articles to add:
-
-// router.get('/profile/:userID/edit', function(req, res, next) {
-//   knex('articles')
-//   .then(function(articles){
-//     res.render('edit', { articles: articles});
-//   })
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// router.get('/articles_questions', function(req, res, next) {
-//   knex('articles').reduce(function ( article_arr, article ){
-//     return knex('questions')
-//     .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
-//     .where({article_id: article.id})
-//     .reduce(function ( question_arr, question ){
-//       question_arr.push(question);
-//       return question_arr;
-//     }, [] ).then(function ( questions ){
-//       article.questions = questions;
-//       article_arr.push(article);
-//       return article_arr;
-//     })
-//   }, [])
-//   .then(function ( articles ){
-//     console.log(articles);
-//     res.render('articles', { articles: articles })
-//   })
-// });
-
-
-
 
 router.get('/oauth_services', function(req, res, next) {
   knex('oauth_services').reduce(function ( oauth_services_arr, strategy ){
     return knex('users')
     .innerJoin('users_oauth', 'users.id', 'users_oauth.user_id')
-    .where({oauth_services_id: strategy.id})
+    .where({oauth_id: strategy.id})
     .reduce(function ( user_arr, user ){
       user_arr.push(user);
       return user_arr;
@@ -295,7 +219,7 @@ router.get('/articles', function(req, res, next) {
       })
     }, [])
     .then(function ( articles ){
-      res.render(articles);
+      res.json(articles);
     })
 });
 
