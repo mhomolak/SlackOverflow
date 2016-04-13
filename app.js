@@ -5,12 +5,12 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
-// const linkedInStrategy = require('passport-linkedin-oauth2').Strategy;
+const passport = require('passport');
+const linkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const routes = require('./routes/index');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
-
-
+const dotenv = require('dotenv');
 const app = express();
 
 const cors = require('cors');
@@ -30,22 +30,42 @@ app.use(cookieSession({
     'process.env.SECRET'
   ]
 }));
+app.use(passport.initialize());
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user)
+});
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/auth', auth);
 
-// passport.use(new linkedInStrategy({
-//   clientID: LINKEDIN_KEY,
-//   clientSecret: LINKEDIN_SECRET,
-//   callbackURL: "http://127.0.0.1:3000/auth/linkedin/callback",
-//   scope: ['r_emailaddress', 'r_basicprofile'],
-// }, function(accessToken, refreshToken, profile, done){
-//   process.nextTick(function(){
-//     return done(null, profile);
-//   });
-// }))
+passport.use(new linkedInStrategy({
+  clientID: process.env.LINKEDIN_KEY,
+  clientSecret: process.env.LINKEDIN_SECRET,
+  callbackURL: "http://localhost:3000/auth/linkedin/callback",
+  scope: ['r_emailaddress', 'r_basicprofile'],
+}, function(accessToken, refreshToken, profile, done){
+  process.nextTick(function(){
+    return done(null, profile);
+  });
+}))
 
+app.get('/auth/linkedin',
+  passport.authenticate('linkedin', { state: 'SOME STATE'  }),
+  function(req, res){
+    // The request will be redirected to LinkedIn for authentication, so this
+    // function will not be called.
+  });
+
+  app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}));
 
 
 // catch 404 and forward to error handler
