@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var knex = require('knex')(require('../knexfile')['development']);
 
-
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   knex('articles')
@@ -10,8 +9,6 @@ router.get('/', function(req, res, next) {
     res.render('loggedin', { articles: articles});
   })
 });
-
-
 
 router.get('/articles/:articlesID', function(req, res, next) {
 var bigArray = [];
@@ -268,7 +265,7 @@ router.get('/oauth_services', function(req, res, next) {
   knex('oauth_services').reduce(function ( oauth_services_arr, strategy ){
     return knex('users')
     .innerJoin('users_oauth', 'users.id', 'users_oauth.user_id')
-    .where({oauth_id: strategy.id})
+    .where({oauth_services_id: strategy.id})
     .reduce(function ( user_arr, user ){
       user_arr.push(user);
       return user_arr;
@@ -283,7 +280,7 @@ router.get('/oauth_services', function(req, res, next) {
   })
 });
 
-router.get('/articles_questions', function(req, res, next) {
+router.get('/articles', function(req, res, next) {
     knex('articles').reduce(function ( article_arr, article ){
       return knex('questions')
       .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
@@ -298,7 +295,7 @@ router.get('/articles_questions', function(req, res, next) {
       })
     }, [])
     .then(function ( articles ){
-      res.render('articles', { articles: articles })
+      res.render(articles);
     })
 });
 
