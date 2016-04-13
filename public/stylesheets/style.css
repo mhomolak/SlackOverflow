@@ -11,23 +11,24 @@ a {
 .navList{
   list-style: none;
   color: white;
+  margin-right: -50%;
 }
 
 .navList li{
   display: inline;
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .navList li a {
   font-family: 'Patua One', cursive;
   color: white;
   text-decoration: none;
-  margin-left: 35px;
+  margin-left: 1%;
 }
 
 .navList li a:hover {
   text-decoration: none;
-  font-size: 35px;
+  font-size: 25px;
 }
 
 
@@ -36,7 +37,8 @@ a {
   font-family: 'Pacifico', cursive;
   color: white;
   font-size: 60px;
-  margin-right: 200px;
+  margin-left: -8%;
+  margin-right: 30%;
 }
 
 .sideBar {
@@ -44,10 +46,31 @@ a {
   position: fixed;
   float: left;
   width: 15%;
+  margin-top: 40px;
   margin-left: -15px;
   margin-right: 100px;
   padding-left: 15px;
-  font-size: 20px;
+  padding-top: 60px;
+  overflow: scroll;
+}
+
+.sideBar h2 {
+  font-size: 18px;
+  font-family: 'Patua One', cursive;
+  color: #595959;
+}
+
+.navBox {
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Patua One', cursive;
+  color: white;
+  background-color: #808080;
+  opacity: .8;
+  border-radius: 15px;
+  padding: 5px;
+  width: 80%;
+  margin-bottom: 50px;
 }
 
 .headPad {
@@ -60,6 +83,18 @@ a {
   font-size: 60px;
   color: black;
   margin-top: 70px;
+}
+
+.specialHead2 {
+  font-family: 'Patua One', cursive;
+  text-align: center;
+  font-size: 60px;
+  color: black;
+  margin-top: -20px;
+}
+
+.indentHead{
+  margin-left: 20%;
 }
 
 button {
@@ -80,6 +115,7 @@ button {
   padding: 5px;
   margin-left:100px;
   float: left;
+  margin-top: 50px;
 }
 
 .smallProfPic {
@@ -178,13 +214,24 @@ input[type="button"] {
   background-color: #b3b3b3;
 }
 
+.articleHead {
+  font-family: 'Patua One', cursive;
+  text-align: center;
+  /*color: #808080;*/
+  color: purple;
+  font-size: 32px;
+  margin-top: 40px;
+  margin-bottom: -80px;
+}
+
 .articleDiv {
   margin: 0 auto;
   margin-left: 20%;
   position: relative;
   width: 75%;
-  background-color: #f2f2f2;
-  border: 1px solid #999999;padding: 20px;
+  /*background-color: #f2f2f2;
+  border: 1px solid #999999;*/
+  padding: 20px;
 }
 
 .articleTable {
@@ -256,4 +303,14 @@ display : none;
   width: 40px;
   border-radius: 50%;
   background-color: rgba(0,30,100,.5);
+}
+
+.containerDiv {
+  margin: 0 auto;
+  margin-left: 20%;
+  position: relative;
+  width: 75%;
+  /*background-color: #f2f2f2;
+  border: 1px solid #999999;*/
+  padding: 20px;
 }

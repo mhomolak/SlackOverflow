@@ -4,6 +4,7 @@ const router = express.Router();
 const knex = require('../db/knex');
 const bcrypt = require('bcrypt');
 const Users = function() { return knex('users') };
+const Recaptcha = require('recaptcha').Recaptcha;
 
 
 /* GET home page. */
@@ -17,6 +18,7 @@ function authorizedUser(req, res, next) {
   }
 }
 
+//original route before I fucked with articles knex:
 router.get('/', authorizedUser, function(req, res, next) {
   Users().then(function(users) {
     if (users) {
@@ -28,12 +30,65 @@ router.get('/', authorizedUser, function(req, res, next) {
   });
 });
 
+//trying to fuck with articles knex:
+//still not working
+// router.get('/', authorizedUser, function(req, res, next) {
+//   knex('articles')
+//   .then(function(articles){
+//     Users().then(function(users) {
+//       if (users) {
+//         res.render('loggedin', { articles: articles});
+//       } else {
+//         res.status(200)
+//           .json({ message: 'User does not exist.'});
+//       }
+//     });
+//   })
+// });
+
+
+
+
+
+
+//original route before I fucked with knex('articles'):
+// router.get('/login', function(req, res, next){
+//   res.render('login');
+// });
+
+//fucking with knex('articles') - works!
 router.get('/login', function(req, res, next){
-  res.render('login');
+  knex('articles')
+  .then(function(articles){
+    res.render('login', { articles: articles});
+  })
 });
 
+
+
+
+
+//original route before I fucked with knex('articles'):
+// router.get('/signup', function(req, res, next){
+//   res.render('signup');
+// });
+
+//fucking with knex('articles') - works!
 router.get('/signup', function(req, res, next){
-  res.render('signup');
+  knex('articles')
+  .then(function(articles){
+    res.render('signup', { articles: articles});
+  })
+      var recaptcha = new Recaptcha('6LcbRR0TAAAAAO-9iVrVVpL3y17E6RKE0_2NkRi7', '6LcbRR0TAAAAAMNLl0CVq4Ru-36TChTkQlIYoF-P');
+
+      console.log(recaptcha.toHTML());
+
+      res.render('signup', {
+      locals: {
+          recaptcha_form: recaptcha.toHTML()
+      }
+    });
+
 });
 
 module.exports = router;

@@ -1,5 +1,7 @@
+<div class="containerDiv">
+
 <div class="page-header">
-    <h1>Sign Up</h1>
+    <h1 class=specialHead>Sign Up</h1>
 </div>
 <form class="form" action="/auth/signup" method="post">
   <div class="form-group">
@@ -20,6 +22,8 @@
     <label for="admin">Not Admin</label>
     <input type="radio" name="admin" value="false" checked="checked">
   </div>
-  <div class="g-recaptcha" data-sitekey="6LcbRR0TAAAAAO-9iVrVVpL3y17E6RKE0_2NkRi7"></div>
+  {{{locals.recaptcha_form}}}
   <button class="btn btn-primary" type="submit" name="button">Sign Up</button>
 </form>
+
+</div>
