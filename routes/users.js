@@ -57,12 +57,21 @@ router.get('/users', function(req, res, next) {
   })
 });
 
-router.get('/articles/:articlesID', function(req, res, next) {
-  res.render('articles');
-});
 
 router.get('/questions/:threadID', function(req, res, next) {
-  res.render('thread');
+  var threadName;
+  knex('questions').where('id', req.params.threadID)
+    .then(function(threadresults){
+      threadName = threadresults[0].title
+      console.log(threadName)
+    }).then(function(){
+      knex('replies').where('question_id', req.params.threadID)
+      .innerJoin('users', 'users.id', 'replies.user_id')
+      .then(function(results){
+        console.log(results)
+        res.render('thread', ({data:results, thread_title:threadName}));
+      })
+    })
 });
 
 router.get('/articles/tagged/:tagId', function(req, res, next) {
