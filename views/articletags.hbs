@@ -12,6 +12,20 @@
         <div class="showme"><p>{{this.description}}</p></div>
         <div class="ok"><img src=http://loremflickr.com/320/240/{{this.name}} alt=""></div>
       </div></li>
+        <table class="table">
+          <tr>
+            <td>Name</td>
+            <td>Instance ID</td>
+            <td>Link</td>
+          </tr>
+          {{#this.articles}}
+          <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.id}}</td>
+            <td><a href="../{{this.article_id}}">To the Cloud</a></td>
+          </tr>
+          {{/this.articles}}
+        </table>
     {{/each}}
     {{else}}
     <h2>There arent any associations yet</h2>

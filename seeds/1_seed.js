@@ -7,8 +7,11 @@ exports.seed = function(knex, Promise) {
 
   var tagsArr = [{name: 'javascript', description:'the javascript tag'},
                  {name: 'knex', description:'the knex tag'},
-                 {name: 'node', description:'the node tag'}];
-
+                 {name: 'node', description:'the node tag'},
+                 {name: 'fun', description:'for stuff we enjoy'},
+                 {name: 'fiction', description:'for stuff that is less than based in reality'},
+                 {name: 'learning', description:'technically this should be everywhere'}];
+                 
   var channelsArr = [{name:'The First Channel'},
                   {name: 'The Second Channel'},
                   {name: 'The Third Channel'}];

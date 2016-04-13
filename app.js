@@ -12,6 +12,10 @@ const auth = require('./routes/auth');
 
 
 const app = express();
+
+const cors = require('cors');
+app.use(cors());
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(logger('dev'));

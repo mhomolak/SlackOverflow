@@ -1,32 +1,26 @@
+{{#data}}
 <div class="paddingDiv"></div>
-<h1 class="specialHead">Akyuna Akish</h1>
+<h1 class="specialHead">Viewing user: {{user_name}}</h1>
 
-<div class="profileContainer">
-  <img src="{{profilePic}}" alt="" class="profPic"/>
+
+  <img src="{{portrait_url}}" alt="" class="profPic"/>
+
 <div class="profileDiv">
 <table class="profileTable">
   <tr>
     <th>
-      Username:
+      Email:
     </td>
     <td>
-      AK47
+      {{email}}
     </td>
   </tr>
   <tr>
     <th>
-      Organization:
+      Bio:
     </td>
     <td>
-      g20
-    </td>
-  </tr>
-  <tr>
-    <th>
-      Location:
-    </td>
-    <td>
-      Boulder, CO
+      {{biography}}
     </td>
   </tr>
   <tr>
@@ -34,7 +28,7 @@
       Superpower:
     </td>
     <td>
-      Being helpful
+      {{name}}
     </td>
   </tr>
   <tr>
@@ -42,7 +36,7 @@
       GitHub Profile:
     </td>
     <td>
-      <a href="https://github.com/AkyunaAkish" target="_blank">https://github.com/AkyunaAkish</a>
+      <a href="{{github_profile_url}}" target="_blank">{{github_profile_url}}</a>
     </td>
   </tr>
 </table>
@@ -52,4 +46,5 @@
 </div>
 
 </div>
-</div>
+
+{{/data}}
