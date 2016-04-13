@@ -5,7 +5,10 @@ var knex = require('knex')(require('../knexfile')['development']);
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('loggedin');
+  knex('articles')
+  .then(function(articles){
+    res.render('loggedin', { articles: articles});
+  })
 });
 
 
@@ -52,6 +55,7 @@ knex.from('articles').where('articles.id', req.params.articlesID)
 
 // console.log(bigArray);
 
+//need to add knex('articles')
 router.get('/users', function(req, res, next) {
   knex('users')
   .then(function(users){
@@ -59,12 +63,20 @@ router.get('/users', function(req, res, next) {
   })
 });
 
+//not working?
 router.get('/articles/:articlesID', function(req, res, next) {
-  res.render('articles');
+  knex('articles')
+  .then(function(articles){
+    res.render('articles', { articles: articles});
+  })
 });
 
+
 router.get('/questions/:threadID', function(req, res, next) {
-  res.render('thread');
+  knex('articles')
+  .then(function(articles){
+    res.render('thread', { articles: articles});
+  })
 });
 
 router.get('/articles/tagged/:tagId', function(req, res, next) {
@@ -110,6 +122,7 @@ router.get('/superpowers', function(req, res, next) {
     res.render('superpowers', {superpowers: superpowers});
   })
 });
+
 router.get('/superpowers/:ID', function(req, res, next) {
   knex('superpowers').where({'id': req.params.ID})
   .then(function(superpowers){
@@ -177,7 +190,7 @@ router.get('/replies_votes', function(req, res, next) {
 // });
 
 
-//trying to add second knex table
+//took the above and added knex('articles')
 router.get('/messages', function(req, res, next) {
   knex('messages')
   .then(function(results) {
@@ -195,8 +208,14 @@ router.get('/messages', function(req, res, next) {
 });
 
 
+//sample knex articles to add:
 
-
+// router.get('/profile/:userID/edit', function(req, res, next) {
+//   knex('articles')
+//   .then(function(articles){
+//     res.render('edit', { articles: articles});
+//   })
+// });
 
 
 

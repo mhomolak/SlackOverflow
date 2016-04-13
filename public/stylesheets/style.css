@@ -254,7 +254,7 @@ input[type="button"] {
   margin: 5px 5px;
 }
 
-.messageDiv {
+.containerDiv {
   margin: 0 auto;
   margin-left: 20%;
   position: relative;
