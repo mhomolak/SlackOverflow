@@ -1,54 +1,10 @@
 
-<br>
 <h1 class="specialHead">{{title}}</h1>
 <div class="paddingDiv"></div>
 
-<h1 class="specialHead2">Articles</h1>
-
 <br>
-<!-- <h1 class="specialHead">Articles</h1>
 
-<div class="paddingDiv"></div> -->
 <div class="articleDiv">
-
-  <!-- <table class="articleTable">
-    <tr>
-      <th>Topic</th>
-      <th>Author</th>
-      <th>Number of Posts</th>
-      <th>Most Recent Post</th>
-    </tr>
-    <tr>
-      <td><a href='/users/question/{{question_id}}'>{{this.title}}</a></td>
-      <td><a href='/users/profile/{{user_id}}'>{{this.user_id}}</a></td>
-      <td>{{this.created_at}}</td>
-      <td>{{this.name}}</td>
-    </tr>
-  </table> -->
-
-    {{#articles}}
-    <h2 class="articleHead">{{this.name}}</h2>
-  </br>
-  {{this.id}}
-  </br>
-    <h3 class="articleHead">Questions</h3>
-  </br>
-    {{this.questions}}
-  <hr>
-    {{#this.questions}}
-    {{this.body}}
-  </br>
-    {{this.title}}
-  </br>
-    {{this.created_at}}
-  </br>
-    {{this.user_id}}
-    {{/this.questions}}
-  </br>
-</br>
-    {{/articles}}
-
-
 
 
  <table class="articleTable">

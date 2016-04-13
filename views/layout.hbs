@@ -34,8 +34,11 @@
     <div class="navBox">
       Quick Navigate <br>to Articles:
     </div>
+    {{#articles}}
+    <h2>{{this.name}}</h2>
     <br>
-
+    {{/articles}}
+  </div>
 
   {{{body}}}
 
