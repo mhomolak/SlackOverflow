@@ -247,3 +247,13 @@ display : block;
 .showhim:hover .ok{
 display : none;
 }
+.table {
+  text-align: center;
+  border: 1px solid black;
+}
+.heads {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: rgba(0,30,100,.5);
+}

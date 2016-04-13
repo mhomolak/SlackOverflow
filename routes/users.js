@@ -229,7 +229,7 @@ router.get('/tags', function(req, res, next) {
   });
 });
 
-router.get('/tags_questions', function(req, res, next) {
+router.get('/questions/tags', function(req, res, next) {
     knex('tags').reduce(function ( tag_arr, tag ){
       return knex('questions')
       .innerJoin('tags_questions', 'questions.id', 'tags_questions.question_id')
@@ -244,11 +244,11 @@ router.get('/tags_questions', function(req, res, next) {
       })
     }, [])
     .then(function ( tags ){
-      res.render('tags', { tags: tags })
+      res.json(tags);
     })
 });
 
-router.get('/tags_articles', function(req, res, next) {
+router.get('/articles/tags', function(req, res, next) {
     knex('tags').reduce(function ( tag_arr, tag ){
       return knex('articles')
       .innerJoin('tags_articles', 'articles.id', 'tags_articles.article_id')
@@ -263,11 +263,11 @@ router.get('/tags_articles', function(req, res, next) {
       })
     }, [])
     .then(function ( tags ){
-      res.render('tags', { tags: tags })
+      res.json(tags);
     })
 });
 
-router.get('/tags_users', function(req, res, next) {
+router.get('/users/tags', function(req, res, next) {
     knex('tags').reduce(function ( tag_arr, tag ){
       return knex('users')
       .innerJoin('tags_users', 'users.id', 'tags_users.user_id')
@@ -282,7 +282,7 @@ router.get('/tags_users', function(req, res, next) {
       })
     }, [])
     .then(function ( tags ){
-      res.render('tags', { tags: tags })
+      res.json(tags);
     })
 });
 
@@ -293,7 +293,7 @@ router.get('/tags/:id', function(req, res, next) {
   });
 });
 
-router.get('/tags_questions/:name', function(req, res, next) {
+router.get('/questions/tags/:name', function(req, res, next) {
     knex('tags').where({'name':req.params.name})
     .reduce(function ( tag_arr, tag ){
       return knex('questions')
@@ -309,11 +309,11 @@ router.get('/tags_questions/:name', function(req, res, next) {
       })
     }, [])
     .then(function ( tags ){
-      res.render('tags', { tags: tags })
+      res.render('questiontags', { tags: tags })
     })
 });
 
-router.get('/tags_articles/:name', function(req, res, next) {
+router.get('/articles/tags/:name', function(req, res, next) {
     knex('tags').where({'name':req.params.name})
     .reduce(function ( tag_arr, tag ){
       return knex('articles')
@@ -329,11 +329,11 @@ router.get('/tags_articles/:name', function(req, res, next) {
       })
     }, [])
     .then(function ( tags ){
-      res.render('tags', { tags: tags })
+      res.render('articletags', { tags: tags })
     })
 });
 
-router.get('/tags_users/:name', function(req, res, next) {
+router.get('/users/tags/:name', function(req, res, next) {
     knex('tags').where({'name':req.params.name})
     .reduce(function ( tag_arr, tag ){
       return knex('users')
@@ -349,7 +349,7 @@ router.get('/tags_users/:name', function(req, res, next) {
       })
     }, [])
     .then(function ( tags ){
-      res.render('tags', { tags: tags })
+      res.render('usertags', { tags: tags })
     })
 });
 
