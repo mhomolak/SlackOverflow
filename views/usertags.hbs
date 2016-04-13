@@ -1,0 +1,39 @@
+<div class="paddingDiv"></div>
+<h1 class="specialHead">Tags</h1>
+<div class="paddingDiv"></div>
+
+<div class="tagDiv">
+
+  <ul class="tagList">
+    {{#if tags}}
+    {{#each tags}}
+      <li><div class="showhim">
+        <a href="/users/tags/{{this.id}}">{{this.name}}</a>
+        <div class="showme"><p>{{this.description}}</p></div>
+        <div class="ok"><img src=http://loremflickr.com/320/240/{{this.name}} alt=""></div>
+      </div></li>
+        <table class="table">
+          <tr>
+            <td>Name</td>
+            <td>Picture</td>
+            <td>Bio</td>
+            <td>Email</td>
+            <td>Link</td>
+          </tr>
+          {{#this.users}}
+          <tr>
+            <td>{{this.name}}</td>
+            <td><img class="heads" src={{this.portrait_url}} alt=""></td>
+            <td>{{this.biography}}</td>
+            <td>{{this.email}}</td>
+            <td><a href=../../profile/{{this.user_id}}>To the Profile</a></td>
+          </tr>
+          {{/this.users}}
+        </table>
+    {{/each}}
+    {{else}}
+    <h2>There arent any associations yet</h2>
+    {{/if}}
+  </ul>
+
+</div>
