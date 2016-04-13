@@ -5,7 +5,10 @@ var knex = require('knex')(require('../knexfile')['development']);
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('loggedin');
+  knex('articles')
+  .then(function(articles){
+    res.render('articlehome', {articles:articles});
+  })
 });
 
 
@@ -58,8 +61,34 @@ router.get('/articles/:articlesID', function(req, res, next) {
     })
 });
 
+router.get('/articles', function(req, res, next) {
+  knex('articles').reduce(function(article_arr, article) {
+    return knex('questions')
+    .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
+    .where({
+      article_id: article.id
+    })
+    .reduce(function(question_arr, question) {
+      question_arr.push(question);
+      return question_arr;
+    }, []).then(function(questions) {
+      article.questions = questions;
+      article_arr.push(article);
+      return article_arr;
+    })
+  }, [])
+  .then(function(articles) {
+    res.render('articlehome', {articles: articles});
+  })
+});
+
 router.get('/newthread/:threadID', function(req, res, next){
-  res.render('newthread', {threadID : req.params.threadID})
+  knex('articles')
+  .then(function(articles){
+    res.render('newthread', {threadID : req.params.threadID,
+      articles: articles
+    })
+  })
 })
 
 router.post('/newthread', function(req, res, next){
@@ -70,8 +99,12 @@ router.post('/newthread', function(req, res, next){
     .then(function(results){
       var questionID = results[0];
       knex('articles_questions').insert({question_id: questionID, article_id:articleNumber})
-      .then(function(resulties){
-        res.render('loggedin')
+      .then(function(results){ //was "resulties" a typo??
+        return knex('articles')
+        .then(function(articles){
+          res.render('articlehome', {articles:articles});
+        })
+
       })
     })
 })
@@ -79,9 +112,14 @@ router.post('/newthread', function(req, res, next){
 router.get('/users', function(req, res, next) {
   knex('users')
     .then(function(users) {
-      res.render('users', {
-        users: users
-      });
+      return knex('articles')
+      .then(function(articles){
+        res.render('users', {
+          users: users,
+          articles:articles
+        });
+      })
+
     })
 });
 
@@ -96,14 +134,21 @@ router.get('/questions/:threadID', function(req, res, next) {
       knex('replies').where('question_id', req.params.threadID)
         .innerJoin('users', 'users.id', 'replies.user_id')
         .then(function(results) {
-          console.log(results)
-          res.render('thread', ({
-            data: results,
-            thread_title: threadName
-          }));
+          return knex('articles')
+          .then(function(articles){
+            console.log(results)
+            res.render('thread', ({
+              data: results,
+              thread_title: threadName,
+              articles: articles
+            })
+          );
+          })
+
         })
     })
 });
+
 
 router.get('/articles/tagged/:tagId', function(req, res, next) {
   // res.render('thread');
@@ -320,26 +365,9 @@ router.get('/oauth_services', function(req, res, next) {
     })
 });
 
-router.get('/articles', function(req, res, next) {
-  knex('articles').reduce(function(article_arr, article) {
-      return knex('questions')
-        .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
-        .where({
-          article_id: article.id
-        })
-        .reduce(function(question_arr, question) {
-          question_arr.push(question);
-          return question_arr;
-        }, []).then(function(questions) {
-          article.questions = questions;
-          article_arr.push(article);
-          return article_arr;
-        })
-    }, [])
-    .then(function(articles) {
-      res.json(articles);
-    })
-});
+
+
+
 
 router.get('/tags', function(req, res, next) {
   knex('tags').then(function(tags) {
