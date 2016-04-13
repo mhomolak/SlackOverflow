@@ -216,7 +216,7 @@ router.get('/articles', function(req, res, next) {
       })
     }, [])
     .then(function ( articles ){
-      res.json(articles);
+      res.render(articles);
     })
 });
 
