@@ -13,6 +13,7 @@ router.get('/', function(req, res, next) {
 router.get('/articles/:articlesID', function(req, res, next) {
   var bigArray = [];
   var articlesArr = [];
+  var article_id = req.params.articlesID
   knex.from('articles')
     .then(function(titleresults) {
       articlesArr = titleresults
@@ -37,20 +38,18 @@ router.get('/articles/:articlesID', function(req, res, next) {
               .then(function(replies) {
                 questionInfo.count = replies.length
                 bigArray.push(questionInfo);
-                // console.log(bigArray)
+                console.log(bigArray)
               });
             knex('articles').where('articles.id', req.params.articlesID)
               .then(function(results) {
                 articleTitle = results[0].name;
               })
               .then(function() {
-                console.log(articlesArr);
-                // console.log('about to render...')
-                // console.log(articleTitle)
                 res.render('articles', {
                   data: bigArray,
                   title: articleTitle,
-                  articles: articlesArr
+                  articles: articlesArr,
+                  article_id:article_id
                 })
               })
           };
@@ -59,6 +58,23 @@ router.get('/articles/:articlesID', function(req, res, next) {
     })
 });
 
+router.get('/newthread/:threadID', function(req, res, next){
+  res.render('newthread', {threadID : req.params.threadID})
+})
+
+router.post('/newthread', function(req, res, next){
+  var threadData = req.body;
+  var articleNumber = threadData.article_id;
+  knex('questions').insert({title: threadData.title, body: threadData.body, user_id: 1})
+    .returning('id')
+    .then(function(results){
+      var questionID = results[0];
+      knex('articles_questions').insert({question_id: questionID, article_id:articleNumber})
+      .then(function(resulties){
+        res.render('loggedin')
+      })
+    })
+})
 
 router.get('/users', function(req, res, next) {
   knex('users')
