@@ -186,7 +186,7 @@ router.get('/oauth_services', function(req, res, next) {
   knex('oauth_services').reduce(function ( oauth_services_arr, strategy ){
     return knex('users')
     .innerJoin('users_oauth', 'users.id', 'users_oauth.user_id')
-    .where({oauth_id: strategy.id})
+    .where({oauth_services_id: strategy.id})
     .reduce(function ( user_arr, user ){
       user_arr.push(user);
       return user_arr;
