@@ -175,12 +175,29 @@ router.get('/messages', function(req, res, next) {
   })
 });
 
-module.exports = router;
+// router.get('/articles_questions', function(req, res, next) {
+//   knex('articles').reduce(function ( article_arr, article ){
+//     return knex('questions')
+//     .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
+//     .where({article_id: article.id})
+//     .reduce(function ( question_arr, question ){
+//       question_arr.push(question);
+//       return question_arr;
+//     }, [] ).then(function ( questions ){
+//       article.questions = questions;
+//       article_arr.push(article);
+//       return article_arr;
+//     })
+//   }, [])
+//   .then(function ( articles ){
+//     console.log(articles);
+//     res.render('articles', { articles: articles })
+//   })
+// });
 
 
 
-//reduce method for collecting data from lookup tables,
-// route exists for testing performance
+
 
 router.get('/articles_questions', function(req, res, next) {
     knex('articles').reduce(function ( article_arr, article ){
@@ -200,3 +217,5 @@ router.get('/articles_questions', function(req, res, next) {
       res.render('articles', { articles: articles })
     })
 });
+
+module.exports = router;
