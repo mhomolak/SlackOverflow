@@ -8,5 +8,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return;
+  return knex.schema.dropTable('superpowers');
 };
