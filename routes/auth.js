@@ -28,7 +28,8 @@
                         email: req.body.email,
                         password: hash,
                         name: req.body.name,
-                        admin: req.body.admin
+                        portrait_url: 'https://robohash.org/'+req.body.name,
+                        admin: false
                     }).then(function() {
                         req.session.email = req.body.email;
                         req.session.save();

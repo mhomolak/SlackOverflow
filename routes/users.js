@@ -14,6 +14,7 @@ router.get('/articles/:articlesID', function(req, res, next) {
   var bigArray = [];
   var articlesArr = [];
   var article_id = req.params.articlesID
+  var questionInfo = {}
   knex.from('articles')
     .then(function(titleresults) {
       articlesArr = titleresults
@@ -23,20 +24,21 @@ router.get('/articles/:articlesID', function(req, res, next) {
         .innerJoin('questions', 'questions.id', 'articles_questions.question_id')
         .innerJoin('users', 'users.id', 'questions.user_id')
         .then(function(results) {
-          // console.log(results)
           var resultsArray = results;
           for (var i = 0; i < resultsArray.length; i++) {
-            var questionInfo = {};
-            questionInfo.question_id = resultsArray[i].question_id;
-            questionInfo.title = resultsArray[i].title;
-            questionInfo.name = resultsArray[i].name;
-            questionInfo.user_id = resultsArray[i].user_id;
-            questionInfo.date = resultsArray[i].date;
-            questionInfo.count = 'Count Goes Here';
-            questionInfo.id = results[i].id;
+            (function() {
+              questionInfo.question_id = resultsArray[i].question_id;
+              questionInfo.title = resultsArray[i].title;
+              questionInfo.name = resultsArray[i].name;
+              questionInfo.user_id = resultsArray[i].user_id;
+              questionInfo.date = resultsArray[i].date;
+              questionInfo.count = 'Count Goes Here';
+              questionInfo.id = results[i].id;
+            }())
             knex('replies').where('question_id', questionInfo.id)
               .then(function(replies) {
                 questionInfo.count = replies.length
+                console.log(questionInfo)
                 bigArray.push(questionInfo);
               })
           }
@@ -46,6 +48,7 @@ router.get('/articles/:articlesID', function(req, res, next) {
               articleTitle = results[0].name;
             })
             .then(function() {
+              // console.log(bigArray)
               res.render('articles', {
                 data: bigArray,
                 title: articleTitle,
@@ -59,8 +62,21 @@ router.get('/articles/:articlesID', function(req, res, next) {
 });
 
 router.get('/newreply/:threadID', function(req, res, next) {
-  res.render('newthread', {
-    threadID: req.params.threadID
+  res.render('newreply', {
+    thread_id: req.params.threadID
+  })
+})
+
+router.post('/newreply', function(req, res, next) {
+  var replyData = req.body
+  var threadNumber = replyData.thread_id;
+  console.log(replyData)
+  knex('replies').insert({
+    body: replyData.body,
+    question_id: replyData.thread_id,
+    user_id: 1
+  }).then(function(){
+    res.redirect('/users/questions/' + replyData.thread_id)
   })
 })
 
@@ -117,7 +133,8 @@ router.get('/questions/:threadID', function(req, res, next) {
           console.log(results)
           res.render('thread', ({
             data: results,
-            thread_title: threadName
+            thread_title: threadName,
+            thread_id:req.params.threadID
           }));
         })
     })
