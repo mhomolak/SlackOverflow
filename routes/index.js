@@ -14,7 +14,7 @@ function authorizedUser(req, res, next) {
   if (user_id) {
     next();
   } else {
-    res.redirect(401, '/');
+    res.redirect('/login');
   }
 }
 
