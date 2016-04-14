@@ -18,8 +18,9 @@
 
       <ul class="navList">
         <a href="/users/articles"><li><h1 class="logo">Slack Overflow</h1></li></a>
-
-        <li><a href="/users/profile/1">My Profile</a></li>
+        {{#if userID}}
+        <li><a href="/users/profile/{{userID}}">My Profile</a></li>
+        {{/if}}
         <li><a href="/users/articles">Articles</a></li>
         <li><a href="/users/tags">Tags</a></li>
         <li><a href="/auth/logout">Log Out</a></li>
