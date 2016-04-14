@@ -18,6 +18,8 @@
       state: true
     }, function(accessToken, refreshToken, profile, done){
       process.nextTick(function(){
+        console.log("fun");
+        console.log(accessToken);
         return done(null, {id: profile.id, displayName: profile.displayName, token: accessToken});
       });
     }))
@@ -45,6 +47,7 @@
         challenge: req.body.recaptcha_challenge_field,
         response: req.body.recaptcha_response_field
       };
+
       var recaptcha = new Recaptcha('6LcbRR0TAAAAAO-9iVrVVpL3y17E6RKE0_2NkRi7', '6LcbRR0TAAAAAMNLl0CVq4Ru-36TChTkQlIYoF-P', data);
 
       console.log(recaptcha.verify);
