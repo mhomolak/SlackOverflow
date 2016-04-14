@@ -133,14 +133,14 @@
     //     });
     // });
 
-    app.use(passport.initialize());
+    router.use(passport.initialize());
 
     passport.serializeUser(function(user, done) {
-      knex('users')
+      knex('users_oauth')
       .where({oauth_given_id: user.id})
       .first()
       .insert({users_oauth: user.profile})
-      done(null, user); 
+      done(null, user);
     });
 
     passport.deserializeUser(function(user, done) {
