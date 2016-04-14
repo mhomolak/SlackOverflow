@@ -7,6 +7,39 @@
     const Users = function() {
       return knex('users')
     };
+    const linkedInStrategy = require('passport-linkedin-oauth2').Strategy;
+    const passport = require('passport');
+
+
+
+    passport.use(new linkedInStrategy({
+      clientID: process.env.LINKEDIN_KEY,
+      clientSecret: process.env.LINKEDIN_SECRET,
+      callbackURL: process.env.HOST + "/auth/linkedin/callback",
+      scope: ['r_emailaddress', 'r_basicprofile'],
+      state: true
+    }, function(accessToken, refreshToken, profile, done){
+      process.nextTick(function(){
+        return done(null, {id: profile.id, displayName: profile.displayName, token: accessToken});
+      });
+    }))
+
+    router.get('/linkedin',
+      passport.authenticate('linkedin'),
+        (function(req, res){
+    console.log("will not log");
+      })
+    )
+
+      router.get('/linkedin/callback', passport.authenticate('linkedin', {
+      successRedirect: '/users/articles',
+      failureRedirect: '/login'
+    }));
+
+    router.use(function (req, res, next) {
+      res.locals.user = req.session.passport.user
+      next()
+    })
 
     router.post('/signup', function(req, res, next) {
       var data = {
@@ -32,6 +65,8 @@
                         admin: false
                     }).then(function() {
                         req.session.email = req.body.email;
+                        req.session.admin = req.body.admin;
+                        req.session.id = req.body.id;
                         req.session.save();
                     }).then(function() {
                         res.redirect('/articlehome');
@@ -64,6 +99,7 @@
         }
       });
     });
+
 
     router.get('/logout', function(req, res) {
       res.clearCookie('session');

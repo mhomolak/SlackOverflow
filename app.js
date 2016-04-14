@@ -7,7 +7,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-const linkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const routes = require('./routes/index');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
@@ -44,34 +43,6 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/auth', auth);
 
-passport.use(new linkedInStrategy({
-  clientID: process.env.LINKEDIN_KEY,
-  clientSecret: process.env.LINKEDIN_SECRET,
-  callbackURL: process.env.HOST + "/auth/linkedin/callback",
-  scope: ['r_emailaddress', 'r_basicprofile'],
-  state: true
-}, function(accessToken, refreshToken, profile, done){
-  process.nextTick(function(){
-    return done(null, {id: profile.id, displayName: profile.displayName, token: accessToken});
-  });
-}))
-
-app.get('/auth/linkedin',
-  passport.authenticate('linkedin'),
-    (function(req, res){
-console.log("fun time");
-  })
-)
-
-  app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
-  successRedirect: '/users/articles',
-  failureRedirect: '/login'
-}));
-
-app.use(function (req, res, next) {
-  res.locals.user = req.session.passport.user
-  next()
-})
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
