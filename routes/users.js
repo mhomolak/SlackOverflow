@@ -38,41 +38,52 @@ router.get('/articles/:articlesID', function(req, res, next) {
               .then(function(replies) {
                 questionInfo.count = replies.length
                 bigArray.push(questionInfo);
-                console.log(bigArray)
-              });
-            knex('articles').where('articles.id', req.params.articlesID)
-              .then(function(results) {
-                articleTitle = results[0].name;
               })
-              .then(function() {
-                res.render('articles', {
-                  data: bigArray,
-                  title: articleTitle,
-                  articles: articlesArr,
-                  article_id:article_id
-                })
+          }
+        }).then(function() {
+          knex('articles').where('articles.id', req.params.articlesID)
+            .then(function(results) {
+              articleTitle = results[0].name;
+            })
+            .then(function() {
+              res.render('articles', {
+                data: bigArray,
+                title: articleTitle,
+                articles: articlesArr,
+                article_id: article_id
               })
-          };
+            })
         })
-
     })
+
 });
 
-router.get('/newthread/:threadID', function(req, res, next){
-  res.render('newthread', {threadID : req.params.threadID})
+router.get('/newthread/:threadID', function(req, res, next) {
+  res.render('newthread', {
+    threadID: req.params.threadID
+  })
 })
 
-router.post('/newthread', function(req, res, next){
+router.post('/newthread', function(req, res, next) {
   var threadData = req.body;
   var articleNumber = threadData.article_id;
-  knex('questions').insert({title: threadData.title, body: threadData.body, user_id: 1})
+  knex('questions').insert({
+      title: threadData.title,
+      body: threadData.body,
+      user_id: 1
+    })
     .returning('id')
-    .then(function(results){
+    .then(function(results) {
+      console.log(results)
       var questionID = results[0];
-      knex('articles_questions').insert({question_id: questionID, article_id:articleNumber})
-      .then(function(resulties){
-        res.render('loggedin')
-      })
+      console.log('second insertion...')
+      knex('articles_questions').insert({
+          question_id: questionID,
+          article_id: articleNumber
+        })
+        .then(function(resulties) {
+          res.render('loggedin')
+        })
     })
 })
 
