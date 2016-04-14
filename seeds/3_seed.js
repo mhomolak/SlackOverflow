@@ -8,9 +8,9 @@ exports.seed = function(knex, Promise) {
   ];
 
   var questionsArr = [
-    { id:1, title: 'A first question', body: 'A question. A very good question.', user_id: 1},
-    { id:2, title: 'A second question', body: 'A question. A very good question.', user_id: 2},
-    { id:3, title: 'A third question', body: 'A question. A very good question.', user_id:2}
+    {title: 'A first question', body: 'A question. A very good question.', user_id: 1},
+    {title: 'A second question', body: 'A question. A very good question.', user_id: 2},
+    {title: 'A third question', body: 'A question. A very good question.', user_id: 2}
   ]
 
   var tags_usersArr = [
