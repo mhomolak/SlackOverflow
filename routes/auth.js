@@ -51,7 +51,6 @@
 
       var recaptcha = new Recaptcha('6LcbRR0TAAAAAO-9iVrVVpL3y17E6RKE0_2NkRi7', '6LcbRR0TAAAAAMNLl0CVq4Ru-36TChTkQlIYoF-P', data);
 
-      console.log(recaptcha.verify);
       recaptcha.verify(function(success, error_code) {
         if (success) {
             Users().where({
@@ -71,7 +70,7 @@
                         req.session.id = req.body.id;
                         req.session.save();
                     }).then(function() {
-                        res.redirect('/articlehome');
+                        res.redirect('../users');
                     })
                 } else {
                     res.redirect('/login');
