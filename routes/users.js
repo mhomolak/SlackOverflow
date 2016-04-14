@@ -58,9 +58,16 @@ router.get('/articles/:articlesID', function(req, res, next) {
 
 });
 
-router.get('/newthread/:threadID', function(req, res, next) {
+router.get('/newreply/:threadID', function(req, res, next) {
   res.render('newthread', {
     threadID: req.params.threadID
+  })
+})
+
+
+router.get('/newthread/:articleID', function(req, res, next) {
+  res.render('newthread', {
+    articleID: req.params.articleID
   })
 })
 
