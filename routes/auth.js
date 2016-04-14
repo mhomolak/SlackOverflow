@@ -17,12 +17,17 @@
       scope: ['r_emailaddress', 'r_basicprofile'],
       state: true
     }, function(accessToken, refreshToken, profile, done){
-      knex('users').
-      process.nextTick(function(){
-        console.log("fun");
-        console.log(accessToken);
-        return done(null, {id: profile.id, displayName: profile.displayName, token: accessToken});
-      });
+        // console.log(profile.displayName);
+        // console.log(profile.emails[0].value);
+        knex('users').insert({name: profile.displayName, email: profile.emails[0].value})
+        .returning('id').then(function(thisId){
+          knex('users_oauth').insert({oauth_services_id: '4', user_id: thisId[0], oauth_given_id: profile.id})
+          .then(function(){
+            process.nextTick(function(){
+              return done(null, {id: profile.id, displayName: profile.displayName, token: accessToken});
+            })
+          })
+        });
     }))
 
     router.get('/linkedin',
@@ -32,15 +37,16 @@
       })
     )
 
-      router.get('/linkedin/callback', passport.authenticate('linkedin', {
-      successRedirect: '/users/articles',
-      failureRedirect: '/login'
+      router.get('auth/linkedin/callback', passport.authenticate('linkedin', {
+      successRedirect: '/users/profile/3/edit',
+      failureRedirect: '/users/profile/3/edit'
     }));
 
     router.use(function (req, res, next) {
       res.locals.user = req.session.passport.user
       next()
     })
+    router.use(passport.initialize());
 
     router.post('/signup', function(req, res, next) {
       var data = {
@@ -132,13 +138,16 @@
     //     });
     // });
 
-    router.use(passport.initialize());
 
     passport.serializeUser(function(user, done) {
-      knex('users_oauth')
-      .where({oauth_given_id: user.id})
-      .first()
-      .insert({users_oauth: user.profile})
+      // knex('users').insert({email: req.session.email})
+      // .then(function(need){
+      //   knex('users_oauth')
+      //   .where({oauth_given_id: passport.user.id})
+      //   .first()
+      //   .insert({})
+      //   .insert({users_oauth: user.profile})
+      // })
       done(null, user);
     });
 

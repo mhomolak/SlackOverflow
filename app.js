@@ -17,6 +17,7 @@ app.use(cors());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.use(passport.initialize());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,7 +33,7 @@ app.use(cookieSession({
 
 
 var ensureLoggedInUser = function(req, res, next) {
-  if (req.session.email) {
+  if (req.session.email || req.session.passport.user.id) {
     next();
   } else {
     res.redirect('/login');
