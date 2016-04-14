@@ -119,7 +119,6 @@ router.get('/users', function(req, res, next) {
           articles:articles
         });
       })
-
     })
 });
 
@@ -149,15 +148,6 @@ router.get('/questions/:threadID', function(req, res, next) {
     })
 });
 
-
-router.get('/articles/tagged/:tagId', function(req, res, next) {
-  // res.render('thread');
-});
-
-
-// router.get('/profile/:userID', function(req, res, next) {
-//   res.render('profile');
-// });
 
 router.get('/profile/:userID', function(req, res, next) {
   var articles = [];
@@ -213,13 +203,9 @@ router.get('/superpowers/:ID', function(req, res, next) {
     });
     })
   })
-
-    .then(function(superpowers) {
-      res.render('superpowers', {
-        superpowers: superpowers
-      });
-    })
 });
+
+
 router.get('/superpowers/:ID', function(req, res, next) {
   knex('superpowers').where({
       'id': req.params.ID
@@ -318,57 +304,6 @@ router.get('/messages', function(req, res, next) {
 });
 
 
-
-// router.get('/articles_questions', function(req, res, next) {
-//   knex('articles').reduce(function ( article_arr, article ){
-//     return knex('questions')
-//     .innerJoin('articles_questions', 'questions.id', 'articles_questions.question_id')
-//     .where({article_id: article.id})
-//     .reduce(function ( question_arr, question ){
-//       question_arr.push(question);
-//       return question_arr;
-//     }, [] ).then(function ( questions ){
-//       article.questions = questions;
-//       article_arr.push(article);
-//       return article_arr;
-//     })
-//   }, [])
-//   .then(function ( articles ){
-//     console.log(articles);
-//     res.render('articles', { articles: articles })
-//   })
-// });
-
-
-//     })
-// });
-
-
-router.get('/oauth_services', function(req, res, next) {
-  knex('oauth_services').reduce(function(oauth_services_arr, strategy) {
-      return knex('users')
-        .innerJoin('users_oauth', 'users.id', 'users_oauth.user_id')
-        .where({
-          oauth_id: strategy.id
-        })
-        .reduce(function(user_arr, user) {
-          user_arr.push(user);
-          return user_arr;
-        }, []).then(function(users) {
-          strategy.users = users;
-          oauth_services_arr.push(strategy);
-          return oauth_services_arr;
-        })
-    }, [])
-    .then(function(oauth_services) {
-      res.json(oauth_services);
-    })
-});
-
-
-
-
-
 router.get('/tags', function(req, res, next) {
   knex('tags').then(function(tags) {
     return knex('articles')
@@ -380,7 +315,7 @@ router.get('/tags', function(req, res, next) {
   });
 });
 
-router.get('/questions/tags', function(req, res, next) {
+router.get('/tags/questions', function(req, res, next) {
   knex('tags').reduce(function(tag_arr, tag) {
       return knex('questions')
         .innerJoin('tags_questions', 'questions.id', 'tags_questions.question_id')
@@ -401,7 +336,7 @@ router.get('/questions/tags', function(req, res, next) {
     })
 });
 
-router.get('/articles/tags', function(req, res, next) {
+router.get('/tags/articles', function(req, res, next) {
   knex('tags').reduce(function(tag_arr, tag) {
       return knex('articles')
         .innerJoin('tags_articles', 'articles.id', 'tags_articles.article_id')
@@ -422,7 +357,7 @@ router.get('/articles/tags', function(req, res, next) {
     })
 });
 
-router.get('/users/tags', function(req, res, next) {
+router.get('/tags/users', function(req, res, next) {
   knex('tags').reduce(function(tag_arr, tag) {
       return knex('users')
         .innerJoin('tags_users', 'users.id', 'tags_users.user_id')
@@ -541,6 +476,28 @@ router.get('/users/tags/:name', function(req, res, next) {
           tags: tags, articles: articles
         })
       })
+    })
+});
+
+
+router.get('/oauth_services', function(req, res, next) {
+  knex('oauth_services').reduce(function(oauth_services_arr, strategy) {
+      return knex('users')
+        .innerJoin('users_oauth', 'users.id', 'users_oauth.user_id')
+        .where({
+          oauth_id: strategy.id
+        })
+        .reduce(function(user_arr, user) {
+          user_arr.push(user);
+          return user_arr;
+        }, []).then(function(users) {
+          strategy.users = users;
+          oauth_services_arr.push(strategy);
+          return oauth_services_arr;
+        })
+    }, [])
+    .then(function(oauth_services) {
+      res.json(oauth_services);
     })
 });
 

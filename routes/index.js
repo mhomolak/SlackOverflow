@@ -18,11 +18,15 @@ function authorizedUser(req, res, next) {
   }
 }
 
-//original route before I fucked with articles knex:
+
 router.get('/', authorizedUser, function(req, res, next) {
   Users().then(function(users) {
     if (users) {
-      res.render('loggedin');
+      knex('articles')
+      .then(function(articles){
+        res.render('articlehome', {articles:articles});
+      })
+
     } else {
       res.status(200)
         .json({ message: 'User does not exist.'});
@@ -47,16 +51,6 @@ router.get('/', authorizedUser, function(req, res, next) {
 // });
 
 
-
-
-
-
-//original route before I fucked with knex('articles'):
-// router.get('/login', function(req, res, next){
-//   res.render('login');
-// });
-
-//fucking with knex('articles') - works!
 router.get('/login', function(req, res, next){
   knex('articles')
   .then(function(articles){
@@ -65,15 +59,6 @@ router.get('/login', function(req, res, next){
 });
 
 
-
-
-
-//original route before I fucked with knex('articles'):
-// router.get('/signup', function(req, res, next){
-//   res.render('signup');
-// });
-
-//fucking with knex('articles') - works!
 router.get('/signup', function(req, res, next){
   knex('articles')
   .then(function(articles){
