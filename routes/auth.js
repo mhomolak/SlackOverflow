@@ -42,10 +42,6 @@
       failureRedirect: '/users/profile/3/edit'
     }));
 
-    router.use(function (req, res, next) {
-      res.locals.user = req.session.passport.user
-      next()
-    })
     router.use(passport.initialize());
 
     router.post('/signup', function(req, res, next) {
