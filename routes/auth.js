@@ -31,6 +31,7 @@
                         admin: false
                     }).then(function() {
                         req.session.email = req.body.email;
+                        req.session.admin = true;
                         req.session.save();
                     }).then(function() {
                         res.redirect('../users');

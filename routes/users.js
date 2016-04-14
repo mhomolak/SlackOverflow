@@ -23,7 +23,14 @@ router.get('/confirmdelete/:deletetype/:id', function(req, res, next){
   knex(''+ req.params.deletetype + '').where('id', req.params.id)
   .then(function(results){
     console.log(results);
-    res.render('confirmdelete', {type:req.params.deletetype, name:results[0].name, id:results[0].id})
+    if (req.params.deletetype == 'replies'){
+      typeInput = 'reply';
+      nameInput = results[0].body
+    } else {
+      typeInput = req.params.deletetype;
+      nameInput = results[0].name
+    }
+    res.render('confirmdelete', {typeDelete: req.params.deletetype, type:typeInput, name:nameInput, id:results[0].id})
   });
 })
 
@@ -188,15 +195,21 @@ router.get('/questions/:threadID', function(req, res, next) {
   var threadName;
   knex('questions').where('id', req.params.threadID)
     .then(function(threadresults) {
-      threadName = threadresults[0].title
+      threadName = threadresults[0].title;
     }).then(function() {
-      knex('replies').where('question_id', req.params.threadID)
+      knex('replies').select('replies.id as reply_id', '*').where('question_id', req.params.threadID)
         .innerJoin('users', 'users.id', 'replies.user_id')
         .then(function(results) {
+          // if (req.session){
+          //   console.log(req.session.admin);
+          // }
+          var adminBool = req.session.admin;
+          console.log(results)
           res.render('thread', ({
             data: results,
             thread_title: threadName,
-            thread_id:req.params.threadID
+            thread_id:req.params.threadID,
+            adminStatus: adminBool
           }));
 //           return knex('articles')
 //           .then(function(articles){
