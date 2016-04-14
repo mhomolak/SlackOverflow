@@ -4,10 +4,10 @@ var knex = require('knex')(require('../knexfile')['development']);
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
   knex('articles')
   .then(function(articles){
-    res.render('articlehome', {articles:articles});
+    res.render('articlehome', {articles:articles, userID: req.params.id});
   })
 });
 
@@ -113,7 +113,7 @@ router.post('/newreply', function(req, res, next) {
   knex('replies').insert({
     body: replyData.body,
     question_id: replyData.thread_id,
-    user_id: 1
+    user_id: req.session.id
   }).then(function(){
     res.redirect('/users/questions/' + replyData.thread_id)
   })
@@ -161,7 +161,7 @@ router.post('/newthread', function(req, res, next) {
   knex('questions').insert({
       title: threadData.title,
       body: threadData.body,
-      user_id: 1
+      user_id: req.session.id
     })
     .returning('id')
     .then(function(results) {
@@ -226,7 +226,8 @@ router.get('/questions/:threadID', function(req, res, next) {
 });
 
 
-router.get('/profile/:userID', function(req, res, next) {
+
+router.get('/profile/myprofile', function(req, res, next) {
   var articles = [];
   knex('articles')
     .then(function(articlesreturn) {
@@ -234,25 +235,83 @@ router.get('/profile/:userID', function(req, res, next) {
     }).then(function() {
       knex('users').select('users.name as user_name', '*')
         .innerJoin('superpowers', 'users.superpower_id', 'superpowers.id')
-        .where('users.id', req.params.userID).first()
+        .where('users.id', req.session.id).first()
         .then(function(results) {
           res.render('profile', {
             data: results,
-            articles: articles
+            articles: articles,
+            myProfile: true
           });
         })
     })
 });
 
-
-router.get('/profile/:userID/edit', function(req, res, next) {
+router.get('/profile/:id', function(req, res, next) {
+  var articles = [];
+  var isMyProfile = false;
+  var userID = req.session.id;
+  if (req.params.id == userID){
+    myProfile = true
+  }
+  console.log(isMyProfile);
   knex('articles')
-    .then(function(articles) {
-      res.render('edit', {
-        articles: articles
-      });
+    .then(function(articlesreturn) {
+      articles = articlesreturn
+    }).then(function() {
+      knex('users').select('users.name as user_name', '*')
+        .innerJoin('superpowers', 'users.superpower_id', 'superpowers.id')
+        .where('users.id', req.params.id).first()
+        .then(function(results) {
+          res.render('profile', {
+            data: results,
+            articles: articles,
+          //  userID: req.params.userID
+            myProfile: isMyProfile
+
+          });
+        })
     })
 });
+
+router.get('/profile/:userID/edit', function(req, res, next) {
+  knex('users')
+  .where({id: req.params.userID})
+  .first()
+  .then(function(user){
+    console.log('user', user);
+    knex('articles')
+      .then(function(articles) {
+        res.render('edit', {
+          articles: articles,
+          user: user
+        });
+      })
+  });
+});
+
+
+
+//FUCKING WITH EDIT PAGE/EDIT FORM
+router.post('/profile/:userID/edit/edituser/:id', function(req, res, next){ //or :userId? //is route correct?
+  knex('users')
+  .where({id: req.params.id})
+  .update(req.body).then(function(response){
+    res.redirect('/profile');
+  });
+});
+
+//REFERENCE FOR ABOVE ^^^^^
+// router.post('/edithuman/:id', function(req,res,next){
+//   knex.table('humans')
+//   .where({id: req.params.id})
+//   .update(req.body).then(function(response){
+//     res.redirect('/');
+//   })
+// });
+
+
+
+
 
 router.get('/superpowers', function(req, res, next) {
   knex('superpowers')
