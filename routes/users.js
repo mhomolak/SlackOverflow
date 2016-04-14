@@ -131,7 +131,6 @@ router.post('/newthread', function(req, res, next) {
     })
     .returning('id')
     .then(function(results) {
-      console.log(results)
       var questionID = results[0];
       knex('articles_questions').insert({question_id: questionID, article_id:articleNumber})
       .then(function(results){ //was "resulties" a typo??
@@ -168,14 +167,11 @@ router.get('/questions/:threadID', function(req, res, next) {
       knex('replies').where('question_id', req.params.threadID)
         .innerJoin('users', 'users.id', 'replies.user_id')
         .then(function(results) {
-// <<<<<<< HEAD
-          console.log(results)
           res.render('thread', ({
             data: results,
             thread_title: threadName,
             thread_id:req.params.threadID
           }));
-// =======
 //           return knex('articles')
 //           .then(function(articles){
 //             console.log(results)
@@ -187,7 +183,6 @@ router.get('/questions/:threadID', function(req, res, next) {
 //           );
 //           })
 //
-// >>>>>>> 44bf1ee8cd2407733bd496beac4c285dc3f42e86
         })
     })
 });

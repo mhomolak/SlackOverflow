@@ -31,9 +31,21 @@ app.use(cookieSession({
   ]
 }));
 
+
+var ensureLoggedInUser = function(req, res, next) {
+  if (req.session.email) {
+    console.log(res.locals.currentSession);
+    console.log(req.session);
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
+
 app.use('/', routes);
-app.use('/users', users);
 app.use('/auth', auth);
+app.use(ensureLoggedInUser);
+app.use('/users',  users);
 
 // passport.use(new linkedInStrategy({
 //   clientID: LINKEDIN_KEY,
