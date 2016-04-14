@@ -17,6 +17,7 @@
       scope: ['r_emailaddress', 'r_basicprofile'],
       state: true
     }, function(accessToken, refreshToken, profile, done){
+      knex('users').
       process.nextTick(function(){
         console.log("fun");
         console.log(accessToken);
@@ -131,5 +132,19 @@
     //         }
     //     });
     // });
+
+    app.use(passport.initialize());
+
+    passport.serializeUser(function(user, done) {
+      knex('users')
+      .where({oauth_given_id: user.id})
+      .first()
+      .insert({users_oauth: user.profile})
+      done(null, user); 
+    });
+
+    passport.deserializeUser(function(user, done) {
+      done(null, user)
+    });
 
     module.exports = router;

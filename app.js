@@ -29,15 +29,7 @@ app.use(cookieSession({
     'process.env.SECRET'
   ]
 }));
-app.use(passport.initialize());
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user)
-});
 
 app.use('/', routes);
 app.use('/users', users);
