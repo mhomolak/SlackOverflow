@@ -113,7 +113,7 @@ router.post('/newreply', function(req, res, next) {
   knex('replies').insert({
     body: replyData.body,
     question_id: replyData.thread_id,
-    user_id: 1
+    user_id: req.session.id
   }).then(function(){
     res.redirect('/users/questions/' + replyData.thread_id)
   })
@@ -161,7 +161,7 @@ router.post('/newthread', function(req, res, next) {
   knex('questions').insert({
       title: threadData.title,
       body: threadData.body,
-      user_id: 1
+      user_id: req.session.id
     })
     .returning('id')
     .then(function(results) {
@@ -226,7 +226,8 @@ router.get('/questions/:threadID', function(req, res, next) {
 });
 
 
-router.get('/profile/:userID', function(req, res, next) {
+
+router.get('/profile/myprofile', function(req, res, next) {
   var articles = [];
   knex('articles')
     .then(function(articlesreturn) {
@@ -234,11 +235,37 @@ router.get('/profile/:userID', function(req, res, next) {
     }).then(function() {
       knex('users').select('users.name as user_name', '*')
         .innerJoin('superpowers', 'users.superpower_id', 'superpowers.id')
-        .where('users.id', req.params.userID).first()
+        .where('users.id', req.session.id).first()
         .then(function(results) {
           res.render('profile', {
             data: results,
-            articles: articles
+            articles: articles,
+            myProfile: true
+          });
+        })
+    })
+});
+
+router.get('/profile/:id', function(req, res, next) {
+  var articles = [];
+  var isMyProfile = false;
+  var userID = req.session.id;
+  if (req.params.id == userID){
+    myProfile = true
+  }
+  console.log(isMyProfile);
+  knex('articles')
+    .then(function(articlesreturn) {
+      articles = articlesreturn
+    }).then(function() {
+      knex('users').select('users.name as user_name', '*')
+        .innerJoin('superpowers', 'users.superpower_id', 'superpowers.id')
+        .where('users.id', req.params.id).first()
+        .then(function(results) {
+          res.render('profile', {
+            data: results,
+            articles: articles,
+            myProfile: isMyProfile
           });
         })
     })

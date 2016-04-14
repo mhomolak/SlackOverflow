@@ -66,10 +66,13 @@
                         name: req.body.name,
                         portrait_url: 'https://robohash.org/'+req.body.name,
                         admin: false
-                    }).then(function() {
+                    })
+                    .returning('id')
+                    .then(function(results) {
+                        console.log(results);
                         req.session.email = req.body.email;
                         req.session.admin = req.body.admin;
-                        req.session.id = req.body.id;
+                        req.session.id = results[0],
                         req.session.admin = true;
                         req.session.save();
                     }).then(function() {
@@ -97,6 +100,7 @@
         if (user && bcrypt.compareSync(req.body.password, user.password)) {
           req.session.email = user.email;
           req.session.admin = user.admin;
+          req.session.id = user.id;
           res.redirect('../users');
         } else {
           res.redirect('/login');
