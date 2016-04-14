@@ -65,11 +65,7 @@ router.get('/login', function(req, res, next){
 });
 
 
-router.get('/logout', function(req, res) {
-  res.clearCookie('session');
-  res.clearCookie('session.sig');
-  res.redirect('/login');
-});
+
 
 
 //original route before I fucked with knex('articles'):

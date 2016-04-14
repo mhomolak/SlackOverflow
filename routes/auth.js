@@ -64,7 +64,11 @@
       });
     });
 
-
+    router.get('/logout', function(req, res) {
+      res.clearCookie('session');
+      res.clearCookie('session.sig');
+      res.redirect('/');
+    });
 
 
 
