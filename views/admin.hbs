@@ -1,0 +1,43 @@
+<div class="containerDiv">
+  <div class="page-header">
+    <h1 class="specialHead">Admin Dashboard</h1>
+    <table class="articleTable">
+      <tr>
+        <td>User Name</td>
+        <td>Admin</td>
+      </tr>
+      {{#users}}
+        <tr>
+          <td>{{name}}</td>
+          <td>{{admin}}</td>
+          {{#unless admin}}
+            <td>
+              <a href="/users/confirmdelete/users/{{id}}">
+                <input type="button" name="name" value="Delete User">
+              </a>
+            </td>
+            <td>
+              <a href="link">
+                <input type="button" name="name" value="Make Admin">
+              </a>
+            </td>
+          {{/unless}}
+        </tr>
+        {{/users}}
+    </table><br><br><br>
+    <table class="articleTable">
+      <tr>
+        <td>Article Name</td>
+        {{#articles}}
+          <tr>
+            <td>{{name}}</td>
+            <td>
+              <a href="/users/confirmdelete/articles/{{id}}">
+                <input type="button" name="name" value="Delete Article">
+              </a>
+            </td>
+          </tr>
+        {{/articles}}
+    </table>
+  </div>
+</div>

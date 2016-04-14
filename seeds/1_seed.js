@@ -11,14 +11,15 @@ exports.seed = function(knex, Promise) {
                  {name: 'fun', description:'for stuff we enjoy'},
                  {name: 'fiction', description:'for stuff that is less than based in reality'},
                  {name: 'learning', description:'technically this should be everywhere'}];
-                 
+
   var channelsArr = [{name:'The First Channel'},
                   {name: 'The Second Channel'},
                   {name: 'The Third Channel'}];
 
   var oauth_servicesArr = [{name: 'Google'},
                            {name: 'Facebook'},
-                           {name: 'Twitter'}];
+                           {name: 'Twitter'},
+                         {name: 'LinkedIn'}];
 
   var articlesArr = [{name: 'Article 1-- HTML'},
                   {name: 'Article 2-- CSS'},

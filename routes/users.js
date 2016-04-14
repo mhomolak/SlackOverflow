@@ -12,6 +12,44 @@ router.get('/:id', function(req, res, next) {
 });
 
 
+router.post('/delete', function(req, res, next){
+  console.log(req.body);
+  knex(''+ req.body.type + '').where('id', req.body.id).del()
+    .then(function(){
+      res.redirect('/users/admin')
+    })
+})
+
+router.get('/confirmdelete/:deletetype/:id', function(req, res, next){
+  knex(''+ req.params.deletetype + '').where('id', req.params.id)
+  .then(function(results){
+    console.log(results);
+    if (req.params.deletetype == 'replies'){
+      typeInput = 'reply';
+      nameInput = results[0].body
+    } else {
+      typeInput = req.params.deletetype;
+      nameInput = results[0].name
+    }
+    res.render('confirmdelete', {typeDelete: req.params.deletetype, type:typeInput, name:nameInput, id:results[0].id})
+  });
+})
+
+router.get('/admin', function(req, res, next){
+  var UsersArticlesLists = {};
+  knex('users')
+  .then(function(results){
+    UsersArticlesLists.users = results;
+    knex('articles')
+    .then(function(articlesresults){
+      UsersArticlesLists.articles = articlesresults;
+      console.log(UsersArticlesLists)
+      res.render('admin', { users : UsersArticlesLists.users, articles: UsersArticlesLists.articles})
+    })
+  })
+})
+
+
 
 router.get('/articles/:articlesID', function(req, res, next) {
   var bigArray = [];
@@ -41,7 +79,6 @@ router.get('/articles/:articlesID', function(req, res, next) {
             knex('replies').where('question_id', questionInfo.id)
               .then(function(replies) {
                 questionInfo.count = replies.length
-                console.log(questionInfo)
                 bigArray.push(questionInfo);
               })
           }
@@ -51,17 +88,17 @@ router.get('/articles/:articlesID', function(req, res, next) {
               articleTitle = results[0].name;
             })
             .then(function() {
-              // console.log(bigArray)
+              var adminBool = req.session.admin;
               res.render('articles', {
                 data: bigArray,
                 title: articleTitle,
                 articles: articlesArr,
-                article_id: article_id
+                article_id: article_id,
+                adminStatus:adminBool
               })
             })
         })
     })
-
 });
 
 router.get('/newreply/:threadID', function(req, res, next) {
@@ -73,23 +110,20 @@ router.get('/newreply/:threadID', function(req, res, next) {
 router.post('/newreply', function(req, res, next) {
   var replyData = req.body
   var threadNumber = replyData.thread_id;
-  console.log(replyData)
   knex('replies').insert({
     body: replyData.body,
     question_id: replyData.thread_id,
-    user_id: 1
+    user_id: req.session.id
   }).then(function(){
     res.redirect('/users/questions/' + replyData.thread_id)
   })
 })
-
 
 router.get('/newthread/:articleID', function(req, res, next) {
   res.render('newthread', {
     articleID: req.params.articleID
   })
 })
-
 
 router.get('/articles', function(req, res, next) {
   knex('articles').reduce(function(article_arr, article) {
@@ -127,11 +161,10 @@ router.post('/newthread', function(req, res, next) {
   knex('questions').insert({
       title: threadData.title,
       body: threadData.body,
-      user_id: 1
+      user_id: req.session.id
     })
     .returning('id')
     .then(function(results) {
-      console.log(results)
       var questionID = results[0];
       knex('articles_questions').insert({question_id: questionID, article_id:articleNumber})
       .then(function(results){ //was "resulties" a typo??
@@ -162,23 +195,24 @@ router.get('/questions/:threadID', function(req, res, next) {
   var threadName;
   knex('questions').where('id', req.params.threadID)
     .then(function(threadresults) {
-      threadName = threadresults[0].title
-      console.log(threadName)
+      threadName = threadresults[0].title;
     }).then(function() {
-      knex('replies').where('question_id', req.params.threadID)
+      knex('replies').select('replies.id as reply_id', '*').where('question_id', req.params.threadID)
         .innerJoin('users', 'users.id', 'replies.user_id')
         .then(function(results) {
-// <<<<<<< HEAD
+          // if (req.session){
+          //   console.log(req.session.admin);
+          // }
+          var adminBool = req.session.admin;
           console.log(results)
           res.render('thread', ({
             data: results,
             thread_title: threadName,
-            thread_id:req.params.threadID
+            thread_id:req.params.threadID,
+            adminStatus: adminBool
           }));
-// =======
 //           return knex('articles')
 //           .then(function(articles){
-//             console.log(results)
 //             res.render('thread', ({
 //               data: results,
 //               thread_title: threadName,
@@ -187,13 +221,13 @@ router.get('/questions/:threadID', function(req, res, next) {
 //           );
 //           })
 //
-// >>>>>>> 44bf1ee8cd2407733bd496beac4c285dc3f42e86
         })
     })
 });
 
 
-router.get('/profile/:userID', function(req, res, next) {
+
+router.get('/profile/myprofile', function(req, res, next) {
   var articles = [];
   knex('articles')
     .then(function(articlesreturn) {
@@ -201,13 +235,39 @@ router.get('/profile/:userID', function(req, res, next) {
     }).then(function() {
       knex('users').select('users.name as user_name', '*')
         .innerJoin('superpowers', 'users.superpower_id', 'superpowers.id')
-        .where('users.id', req.params.userID).first()
+        .where('users.id', req.session.id).first()
         .then(function(results) {
-          console.log(articles)
           res.render('profile', {
             data: results,
             articles: articles,
-            userID: req.params.userID
+            myProfile: true
+          });
+        })
+    })
+});
+
+router.get('/profile/:id', function(req, res, next) {
+  var articles = [];
+  var isMyProfile = false;
+  var userID = req.session.id;
+  if (req.params.id == userID){
+    myProfile = true
+  }
+  console.log(isMyProfile);
+  knex('articles')
+    .then(function(articlesreturn) {
+      articles = articlesreturn
+    }).then(function() {
+      knex('users').select('users.name as user_name', '*')
+        .innerJoin('superpowers', 'users.superpower_id', 'superpowers.id')
+        .where('users.id', req.params.id).first()
+        .then(function(results) {
+          res.render('profile', {
+            data: results,
+            articles: articles,
+          //  userID: req.params.userID
+            myProfile: isMyProfile
+
           });
         })
     })
@@ -300,7 +360,6 @@ router.get('/channels', function(req, res, next) {
   .then(function(results) {
     return knex('articles')
     .then(function(articles){
-      console.log(results);
       res.render('channels', {
         title: "Channels", channels: results, articles: articles
       });
@@ -327,7 +386,6 @@ router.get('/channels_users', function(req, res, next) {
     .then(function(channels) {
       return knex('articles')
       .then(function(articles){
-        console.log(channels);
         res.render('channels', {
           channels: channels, articles: articles
         });
@@ -354,7 +412,6 @@ router.get('/replies_votes', function(req, res, next) {
     .then(function ( replies ){
       return knex('articles')
       .then(function(articles){
-        console.log(replies);
         res.render('votes', {
           replies: replies, articles: articles
         });
@@ -369,7 +426,6 @@ router.get('/messages', function(req, res, next) {
     .then(function(results) {
       return knex('articles')
       .then(function(articles){
-        console.log(results);
         res.render('messages', {
           title: "Messages",
           messages: results, articles: articles
@@ -560,7 +616,7 @@ router.get('/oauth_services', function(req, res, next) {
       return knex('users')
         .innerJoin('users_oauth', 'users.id', 'users_oauth.user_id')
         .where({
-          oauth_id: strategy.id
+          oauth_services_id: strategy.id
         })
         .reduce(function(user_arr, user) {
           user_arr.push(user);

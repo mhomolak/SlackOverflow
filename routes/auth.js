@@ -7,6 +7,42 @@
     const Users = function() {
       return knex('users')
     };
+    const linkedInStrategy = require('passport-linkedin-oauth2').Strategy;
+    const passport = require('passport');
+
+    passport.use(new linkedInStrategy({
+      clientID: process.env.LINKEDIN_KEY,
+      clientSecret: process.env.LINKEDIN_SECRET,
+      callbackURL: process.env.HOST + "/auth/linkedin/callback",
+      scope: ['r_emailaddress', 'r_basicprofile'],
+      state: true
+    }, function(accessToken, refreshToken, profile, done){
+        // console.log(profile.displayName);
+        // console.log(profile.emails[0].value);
+        knex('users').insert({name: profile.displayName, email: profile.emails[0].value})
+        .returning('id').then(function(thisId){
+          knex('users_oauth').insert({oauth_services_id: '4', user_id: thisId[0], oauth_given_id: profile.id})
+          .then(function(){
+            process.nextTick(function(){
+              return done(null, {id: profile.id, displayName: profile.displayName, token: accessToken});
+            })
+          })
+        });
+    }))
+
+    router.get('/linkedin',
+      passport.authenticate('linkedin'),
+        (function(req, res){
+    console.log("will not log");
+      })
+    )
+
+      router.get('auth/linkedin/callback', passport.authenticate('linkedin', {
+      successRedirect: '/users/profile/3/edit',
+      failureRedirect: '/users/profile/3/edit'
+    }));
+
+    router.use(passport.initialize());
 
     router.post('/signup', function(req, res, next) {
       var data = {
@@ -14,9 +50,9 @@
         challenge: req.body.recaptcha_challenge_field,
         response: req.body.recaptcha_response_field
       };
+
       var recaptcha = new Recaptcha('6LcbRR0TAAAAAO-9iVrVVpL3y17E6RKE0_2NkRi7', '6LcbRR0TAAAAAMNLl0CVq4Ru-36TChTkQlIYoF-P', data);
 
-      console.log(recaptcha.verify);
       recaptcha.verify(function(success, error_code) {
         if (success) {
             Users().where({
@@ -30,11 +66,17 @@
                         name: req.body.name,
                         portrait_url: 'https://robohash.org/'+req.body.name,
                         admin: false
-                    }).then(function() {
+                    })
+                    .returning('id')
+                    .then(function(results) {
+                        console.log(results);
                         req.session.email = req.body.email;
+                        req.session.admin = req.body.admin;
+                        req.session.id = results[0],
+                        req.session.admin = true;
                         req.session.save();
                     }).then(function() {
-                        res.redirect('/articlehome');
+                        res.redirect('../users');
                     })
                 } else {
                     res.redirect('/login');
@@ -49,7 +91,6 @@
           });
         }
       });
-
     });
 
     router.post('/login', function(req, res, next) {
@@ -58,7 +99,10 @@
       }).first().then(function(user) {
         if (user && bcrypt.compareSync(req.body.password, user.password)) {
           req.session.email = user.email;
-          res.redirect('../users/' + user.id);
+          // res.redirect('../users/' + user.id);
+          req.session.admin = user.admin;
+          req.session.id = user.id;
+          res.redirect('../users');
         } else {
           res.redirect('/login');
         }
@@ -96,5 +140,22 @@
     //         }
     //     });
     // });
+
+
+    passport.serializeUser(function(user, done) {
+      // knex('users').insert({email: req.session.email})
+      // .then(function(need){
+      //   knex('users_oauth')
+      //   .where({oauth_given_id: passport.user.id})
+      //   .first()
+      //   .insert({})
+      //   .insert({users_oauth: user.profile})
+      // })
+      done(null, user);
+    });
+
+    passport.deserializeUser(function(user, done) {
+      done(null, user)
+    });
 
     module.exports = router;

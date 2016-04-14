@@ -1,0 +1,10 @@
+<div class="containerDiv">
+  <h4 class='specialHead'>Delete {{type}}?</h4>
+  <h4 class='specialHead'><strong>{{name}}</strong></h4>
+  <br><br><br>
+  <form class="form" action="/users/delete" method="post">
+    <input type="hidden" name="type" value="{{typeDelete}}">
+    <input type="hidden" name="id" value="{{id}}">
+    <button class="btn btn-primary" type="submit">Yes, confirm delete.</button>
+  </form>
+</div>
