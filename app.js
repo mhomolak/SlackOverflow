@@ -31,9 +31,9 @@ app.use(cookieSession({
   ]
 }));
 
-
+// Potential OR statement in the below "if"  || req.session.passport.user.id
 var ensureLoggedInUser = function(req, res, next) {
-  if (req.session.email || req.session.passport.user.id) {
+  if (req.session.email) {
     next();
   } else {
     res.redirect('/login');

@@ -17,8 +17,6 @@
       scope: ['r_emailaddress', 'r_basicprofile'],
       state: true
     }, function(accessToken, refreshToken, profile, done){
-        // console.log(profile.displayName);
-        // console.log(profile.emails[0].value);
         knex('users').insert({name: profile.displayName, email: profile.emails[0].value})
         .returning('id').then(function(thisId){
           knex('users_oauth').insert({oauth_services_id: '4', user_id: thisId[0], oauth_given_id: profile.id})
@@ -69,7 +67,7 @@
                     }).then(function() {
                         req.session.email = req.body.email;
                         req.session.admin = req.body.admin;
-                        req.session.id = req.body.id;
+                        // req.session.id = req.body.id;
                         req.session.admin = true;
                         req.session.save();
                     }).then(function() {
