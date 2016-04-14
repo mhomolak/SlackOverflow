@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
   .createTable('users_oauth', function(table) {
     table.integer('oauth_services_id').references('id').inTable('oauth_services').onDelete('CASCADE').onUpdate('CASCADE');
     table.integer('user_id').references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE');
-    table.integer('oauth_given_id');
+    table.string('oauth_given_id');
   })
   .createTable('tags_questions', function(table) {
     table.integer('tag_id').references('id').inTable('tags').onDelete('CASCADE').onUpdate('CASCADE');

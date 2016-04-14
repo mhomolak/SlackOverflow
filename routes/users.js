@@ -11,6 +11,7 @@ router.get('/', function(req, res, next) {
   })
 });
 
+
 router.post('/delete', function(req, res, next){
   console.log(req.body);
   knex(''+ req.body.type + '').where('id', req.body.id).del()
@@ -98,7 +99,6 @@ router.get('/articles/:articlesID', function(req, res, next) {
             })
         })
     })
-
 });
 
 router.get('/newreply/:threadID', function(req, res, next) {
@@ -119,13 +119,11 @@ router.post('/newreply', function(req, res, next) {
   })
 })
 
-
 router.get('/newthread/:articleID', function(req, res, next) {
   res.render('newthread', {
     articleID: req.params.articleID
   })
 })
-
 
 router.get('/articles', function(req, res, next) {
   knex('articles').reduce(function(article_arr, article) {
@@ -559,7 +557,7 @@ router.get('/oauth_services', function(req, res, next) {
       return knex('users')
         .innerJoin('users_oauth', 'users.id', 'users_oauth.user_id')
         .where({
-          oauth_id: strategy.id
+          oauth_services_id: strategy.id
         })
         .reduce(function(user_arr, user) {
           user_arr.push(user);
