@@ -58,6 +58,7 @@
       }).first().then(function(user) {
         if (user && bcrypt.compareSync(req.body.password, user.password)) {
           req.session.email = user.email;
+          req.session.admin = user.admin;
           res.redirect('../users');
         } else {
           res.redirect('/login');
