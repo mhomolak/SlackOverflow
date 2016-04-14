@@ -49,25 +49,29 @@ passport.use(new linkedInStrategy({
   clientSecret: process.env.LINKEDIN_SECRET,
   callbackURL: process.env.HOST + "/auth/linkedin/callback",
   scope: ['r_emailaddress', 'r_basicprofile'],
+  state: true
 }, function(accessToken, refreshToken, profile, done){
   process.nextTick(function(){
-    return done(null, profile);
+    return done(null, {id: profile.id, displayName: profile.displayName, token: accessToken});
   });
 }))
 
 app.get('/auth/linkedin',
-  passport.authenticate('linkedin', { state: 'SOME STATE'  }),
-  function(req, res){
-    // The request will be redirected to LinkedIn for authentication, so this
-    // function will not be called.
-  });
+  passport.authenticate('linkedin'),
+    (function(req, res){
+console.log("fun time");
+  })
+)
 
   app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
-  successRedirect: '/',
+  successRedirect: '/users/articles',
   failureRedirect: '/login'
 }));
 
-
+app.use(function (req, res, next) {
+  res.locals.user = req.session.passport.user
+  next()
+})
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
