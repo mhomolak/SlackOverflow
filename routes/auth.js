@@ -10,8 +10,6 @@
     const linkedInStrategy = require('passport-linkedin-oauth2').Strategy;
     const passport = require('passport');
 
-
-
     passport.use(new linkedInStrategy({
       clientID: process.env.LINKEDIN_KEY,
       clientSecret: process.env.LINKEDIN_SECRET,
@@ -84,7 +82,6 @@
           });
         }
       });
-
     });
 
     router.post('/login', function(req, res, next) {
@@ -99,7 +96,6 @@
         }
       });
     });
-
 
     router.get('/logout', function(req, res) {
       res.clearCookie('session');
