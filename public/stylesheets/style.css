@@ -41,6 +41,14 @@ a {
   margin-right: 30%;
 }
 
+.logo a, a:hover, a:active, a:visited, a:link {
+  text-decoration: none;
+}
+
+.navList a, a:hover, a:active, a:visited, a:link{
+  text-decoration: none;
+}
+
 .sideBar {
   min-height: 100%;
   position: fixed;
@@ -95,6 +103,14 @@ a {
 
 .indentHead{
   margin-left: 20%;
+}
+
+.containerDiv {
+  margin: 0 auto;
+  margin-left: 20%;
+  position: relative;
+  width: 75%;
+  padding: 20px;
 }
 
 button {
@@ -218,10 +234,19 @@ input[type="button"] {
   font-family: 'Patua One', cursive;
   text-align: center;
   /*color: #808080;*/
-  color: purple;
   font-size: 32px;
   margin-top: 40px;
   margin-bottom: -80px;
+}
+
+.articleHome{
+  padding: 60px;
+  margin-top: 7%;
+  margin-left: 5%;
+  font-size: 20px;
+  background-color: #e6e6e6;
+  border-radius: 25px;
+  width: 90%;
 }
 
 .articleDiv {
@@ -229,8 +254,6 @@ input[type="button"] {
   margin-left: 20%;
   position: relative;
   width: 75%;
-  /*background-color: #f2f2f2;
-  border: 1px solid #999999;*/
   padding: 20px;
 }
 
@@ -259,7 +282,6 @@ input[type="button"] {
 
 .tagList {
   list-style-type: none;
-  font-size: 20px;
 }
 
 .tagList li {
@@ -268,11 +290,13 @@ input[type="button"] {
   color: white;
   float: left;
   padding: 6px;
-  width: 10%;
+  width: 14%;
   margin: 5px;
   text-align: center;
   border-radius: 15px;
   font-family: pacifico;
+  text-shadow: 2px 2px black;
+  font-size: 25px;
 }
 .ok > img{
   width: 3em;
@@ -281,9 +305,11 @@ input[type="button"] {
 }
 .showhim a {
   color:white;
+  text-decoration: none;
 }
 .showhim a:hover {
   color:silver;
+  text-decoration: none;
 }
 .showme{
 display: none;
@@ -298,6 +324,7 @@ display : none;
   text-align: center;
   border: 1px solid black;
 }
+
 .heads {
   height: 40px;
   width: 40px;
@@ -305,12 +332,33 @@ display : none;
   background-color: rgba(0,30,100,.5);
 }
 
-.containerDiv {
-  margin: 0 auto;
-  margin-left: 20%;
-  position: relative;
-  width: 75%;
-  /*background-color: #f2f2f2;
-  border: 1px solid #999999;*/
-  padding: 20px;
+.superpowerDiv {
+  padding-top: 30px;
+  margin-top: 7%;
+  margin-left: 15%;
+  font-size: 20px;
+  background-color: #e6e6e6;
+  border-radius: 25px;
+  width: 70%;
+}
+
+.powersTable  {
+  margin-left: 10%;
+  width: 100%;
+}
+
+.powersTable td {
+  padding: 7px;
+  width: 65%;
+  padding-left: 30px;
+}
+
+.votesDiv{
+  margin-top: 7%;
+  margin-left: 5%;
+  font-size: 20px;
+}
+
+.bodyText {
+  height: 500px;
 }

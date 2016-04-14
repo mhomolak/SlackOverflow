@@ -1,26 +1,28 @@
 
 <div class="articleDiv">
 
-
-    {{#articles}}
-    <h2>{{this.name}}</h2>
-  </br>
-  {{this.id}}
-  </br>
-    <h3>Questions</h3>
-  </br>
-    {{this.questions}}
-  <hr>
-    {{#this.questions}}
-    {{this.body}}
-  </br>
-    {{this.title}}
-  </br>
-    {{this.created_at}}
-  </br>
-    {{this.user_id}}
-    {{/this.questions}}
-  </br>
-  </br>
-    {{/articles}}
+<h1 class="specialHead">Articles</h1>
+  <div class="articleHome">
+        {{#articles}}
+        <h2>{{this.name}}</h2>
+      </br>
+      {{this.id}}
+      </br>
+        <h3>Questions</h3>
+      </br>
+        {{this.questions}}
+      <hr>
+        {{#this.questions}}
+        {{this.body}}
+      </br>
+        {{this.title}}
+      </br>
+        {{this.created_at}}
+      </br>
+        {{this.user_id}}
+        {{/this.questions}}
+      </br>
+      </br>
+        {{/articles}}
+  </div>
 </div>

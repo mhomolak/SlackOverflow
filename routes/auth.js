@@ -34,7 +34,7 @@
                         req.session.email = req.body.email;
                         req.session.save();
                     }).then(function() {
-                        res.redirect('/');
+                        res.redirect('/articlehome');
                     })
                 } else {
                     res.redirect('/login');
@@ -67,7 +67,8 @@
 
     router.get('/logout', function(req, res) {
       res.clearCookie('session');
-      res.redirect('/login');
+      res.clearCookie('session.sig');
+      res.redirect('/');
     });
 
 
