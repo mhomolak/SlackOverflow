@@ -11,6 +11,36 @@ router.get('/', function(req, res, next) {
   })
 });
 
+router.post('/delete', function(req, res, next){
+  console.log(req.body);
+  knex(''+ req.body.type + '').where('id', req.body.id).del()
+    .then(function(){
+      res.redirect('/users/admin')
+    })
+})
+
+router.get('/confirmdelete/:deletetype/:id', function(req, res, next){
+  knex(''+ req.params.deletetype + '').where('id', req.params.id)
+  .then(function(results){
+    console.log(results);
+    res.render('confirmdelete', {type:req.params.deletetype, name:results[0].name, id:results[0].id})
+  });
+})
+
+router.get('/admin', function(req, res, next){
+  var UsersArticlesLists = {};
+  knex('users')
+  .then(function(results){
+    UsersArticlesLists.users = results;
+    knex('articles')
+    .then(function(articlesresults){
+      UsersArticlesLists.articles = articlesresults;
+      console.log(UsersArticlesLists)
+      res.render('admin', { users : UsersArticlesLists.users, articles: UsersArticlesLists.articles})
+    })
+  })
+})
+
 
 
 router.get('/articles/:articlesID', function(req, res, next) {
