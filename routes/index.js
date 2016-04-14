@@ -14,14 +14,19 @@ function authorizedUser(req, res, next) {
   if (user_id) {
     next();
   } else {
-    res.redirect(401, '/');
+    res.redirect('/login');
   }
 }
+
 
 router.get('/', authorizedUser, function(req, res, next) {
   Users().then(function(users) {
     if (users) {
-      res.render('loggedin');
+      knex('articles')
+      .then(function(articles){
+        res.render('articlehome', {articles:articles});
+      })
+
     } else {
       res.status(200)
         .json({ message: 'User does not exist.'});
@@ -29,12 +34,36 @@ router.get('/', authorizedUser, function(req, res, next) {
   });
 });
 
+//trying to fuck with articles knex:
+//still not working
+// router.get('/', authorizedUser, function(req, res, next) {
+//   knex('articles')
+//   .then(function(articles){
+//     Users().then(function(users) {
+//       if (users) {
+//         res.render('loggedin', { articles: articles});
+//       } else {
+//         res.status(200)
+//           .json({ message: 'User does not exist.'});
+//       }
+//     });
+//   })
+// });
+
+
 router.get('/login', function(req, res, next){
-  res.render('login');
+  knex('articles')
+  .then(function(articles){
+    res.render('login', { articles: articles});
+  })
 });
 
-router.get('/signup', function(req, res, next){
 
+router.get('/signup', function(req, res, next){
+  knex('articles')
+  .then(function(articles){
+    res.render('signup', { articles: articles});
+  })
       var recaptcha = new Recaptcha('6LcbRR0TAAAAAO-9iVrVVpL3y17E6RKE0_2NkRi7', '6LcbRR0TAAAAAMNLl0CVq4Ru-36TChTkQlIYoF-P');
 
       console.log(recaptcha.toHTML());
@@ -45,10 +74,6 @@ router.get('/signup', function(req, res, next){
       }
     });
 
-});
-
-router.get('/test', function(req,res,next){
-  res.json('RESPONSEEEEEEEEEE');
 });
 
 module.exports = router;

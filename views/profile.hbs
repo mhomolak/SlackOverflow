@@ -1,50 +1,51 @@
 {{#data}}
 <div class="paddingDiv"></div>
-<h1 class="specialHead">Viewing user: {{user_name}}</h1>
+<h1 class="specialHead indentHead">Viewing user: {{user_name}}</h1>
 
+  <div class="containerDiv">
+            <img src="{{portrait_url}}" alt="" class="profPic"/>
 
-  <img src="{{portrait_url}}" alt="" class="profPic"/>
+          <div class="profileDiv">
+          <table class="profileTable">
+            <tr>
+              <th>
+                Email:
+              </td>
+              <td>
+                {{email}}
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Bio:
+              </td>
+              <td>
+                {{biography}}
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Superpower:
+              </td>
+              <td>
+                {{name}}
+              </td>
+            </tr>
+            <tr>
+              <th>
+                GitHub Profile:
+              </td>
+              <td>
+                <a href="{{github_profile_url}}" target="_blank">{{github_profile_url}}</a>
+              </td>
+            </tr>
+          </table>
 
-<div class="profileDiv">
-<table class="profileTable">
-  <tr>
-    <th>
-      Email:
-    </td>
-    <td>
-      {{email}}
-    </td>
-  </tr>
-  <tr>
-    <th>
-      Bio:
-    </td>
-    <td>
-      {{biography}}
-    </td>
-  </tr>
-  <tr>
-    <th>
-      Superpower:
-    </td>
-    <td>
-      {{name}}
-    </td>
-  </tr>
-  <tr>
-    <th>
-      GitHub Profile:
-    </td>
-    <td>
-      <a href="{{github_profile_url}}" target="_blank">{{github_profile_url}}</a>
-    </td>
-  </tr>
-</table>
+          <div class="buttonDiv">
+            <a href={{id}}/edit><input type="button" name="name" value="Edit Your Profile" class="editButton"
+            ></a>
+          </div>
 
-<div class="buttonDiv">
-  <input type="button" name="name" value="Edit Your Profile" class="editButton">
-</div>
-
-</div>
-
+          </div>
+    </div>
 {{/data}}

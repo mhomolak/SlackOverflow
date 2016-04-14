@@ -28,12 +28,13 @@
                         email: req.body.email,
                         password: hash,
                         name: req.body.name,
-                        admin: req.body.admin
+                        portrait_url: 'https://robohash.org/'+req.body.name,
+                        admin: false
                     }).then(function() {
                         req.session.email = req.body.email;
                         req.session.save();
                     }).then(function() {
-                        res.redirect('/');
+                        res.redirect('/articlehome');
                     })
                 } else {
                     res.redirect('/login');
@@ -66,7 +67,8 @@
 
     router.get('/logout', function(req, res) {
       res.clearCookie('session');
-      res.redirect('/login');
+      res.clearCookie('session.sig');
+      res.redirect('/');
     });
 
 

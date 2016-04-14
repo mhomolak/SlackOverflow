@@ -18,9 +18,9 @@ exports.seed = function(knex, Promise) {
   ];
 
   var repliesArr = [
-    { id: 2, body: 'A reply. A very good reply.', user_id: 2, question_id: 1},
-    { id: 3, body: 'A reply. A very good reply.', user_id: 2, question_id: 1},
-    { id: 1, body: 'A reply. A very good reply.', user_id: 2, question_id: 1}
+    {body: 'A reply. A very good reply.', user_id: 2, question_id: 1},
+    {body: 'A reply. A very good reply.', user_id: 2, question_id: 1},
+    {body: 'A reply. A very good reply.', user_id: 2, question_id: 1}
   ]
 
   return Promise.join(

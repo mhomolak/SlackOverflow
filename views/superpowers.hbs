@@ -1,8 +1,23 @@
-<h1>Super Tower of Super Powers:</h1>
-{{#superpowers}}
-{{this.name}}
-</br>
-{{this.description}}
-</br>
-</br>
-{{/superpowers}}
+<div class="containerDiv">
+
+  <h1 class="specialHead">Super Tower of Super Powers:</h1>
+
+  <div class="superpowerDiv">
+      {{#superpowers}}
+        <table class="powersTable">
+          <tr>
+            <th>Power Name:</th>
+            <td>{{this.name}}</td>
+          </tr>
+          <tr>
+            <th>Power Description:</th>
+            <td>{{this.description}}</td>
+          </tr>
+          <tr>
+            <th>&nbsp;</th>
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      {{/superpowers}}
+  </div>
+</div>
