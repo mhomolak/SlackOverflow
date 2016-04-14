@@ -1,8 +1,12 @@
-<div class="paddingDiv"></div>
-<h1 class="specialHead">Viewing thread: '{{thread_title}}'</h1>
+<div class="paddingDiv">
+</div>
 
-<div class="paddingDiv"></div>
 <div class="articleDiv">
+  <h1 class="specialHead">Viewing thread: '{{thread_title}}'</h1>
+  <a href="/users/newreply/{{thread_id}}">
+    <button class="btn btn-primary" name="button">+ Post a reply</button>
+  </a>
+  <br><br>
   <table class="articleTable">
     <tr>
       <th>User</th>
@@ -10,11 +14,11 @@
       <th>Date</th>
     </tr>
     {{#data}}
-    <tr>
-      <td><a href='/users/profile/{{user_id}}'>{{name}}</a></td>
-      <td>{{body}}</td>
-      <td>date-placeholder</td>
-    </tr>
+      <tr>
+        <td><a href='/users/profile/{{user_id}}'>{{name}}</a></td>
+        <td>{{body}}</td>
+        <td>{{created_at}}</td>
+      </tr>
     {{/data}}
   </table>
 </div>
