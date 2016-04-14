@@ -34,21 +34,7 @@ router.get('/', authorizedUser, function(req, res, next) {
   });
 });
 
-//trying to fuck with articles knex:
-//still not working
-// router.get('/', authorizedUser, function(req, res, next) {
-//   knex('articles')
-//   .then(function(articles){
-//     Users().then(function(users) {
-//       if (users) {
-//         res.render('loggedin', { articles: articles});
-//       } else {
-//         res.status(200)
-//           .json({ message: 'User does not exist.'});
-//       }
-//     });
-//   })
-// });
+
 
 
 router.get('/login', function(req, res, next){
