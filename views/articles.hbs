@@ -21,8 +21,10 @@
    <tr>
      <td><a href='/users/questions/{{question_id}}'>{{title}}</a></td>
      <td><a href='/users/profile/{{user_id}}'>{{name}}</a></td>
-     <td>{{count}}</td>
      <td>{{date}}</td>
+     {{#if ../adminStatus}}
+     <td><a href='/users/confirmdelete/questions/{{question_id}}'>Delete</a></td>
+     {{/if}}
    </tr>
    {{/data}}
  </table>

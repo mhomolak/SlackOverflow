@@ -87,11 +87,13 @@ router.get('/articles/:articlesID', function(req, res, next) {
               articleTitle = results[0].name;
             })
             .then(function() {
+              var adminBool = req.session.admin;
               res.render('articles', {
                 data: bigArray,
                 title: articleTitle,
                 articles: articlesArr,
-                article_id: article_id
+                article_id: article_id,
+                adminStatus:adminBool
               })
             })
         })
