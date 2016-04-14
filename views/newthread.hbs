@@ -3,15 +3,16 @@
   <div class="page-header">
       <h1 class=specialHead>Start your new thread here. </h1>
   </div>
-<form class="form" action="/users/newthread" method="post">
+<form class="form" action="/users/newthread" method="post" id="newThreadForm">
   <div class="form-group">
     <label for="name">Title</label>
     <input type="text" class="form-control" name="title">
     <input type="hidden" name="article_id" value="{{threadID}}">
   </div>
   <div class="form-group">
-    <label for="name">Enter Body Here</label>
-    <input type="textarea" class="form-control bodyText" name="body">
+    <label for="name">Enter Text Here</label>
+    <textarea name="body" form="newThreadForm" class="form-control bodyText"
+    style="height: 250px;"></textarea>
   </div>
   <button class="btn btn-primary" type="submit">Submit</button>
 </form>
