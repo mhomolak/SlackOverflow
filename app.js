@@ -34,8 +34,6 @@ app.use(cookieSession({
 
 var ensureLoggedInUser = function(req, res, next) {
   if (req.session.email) {
-    console.log(res.locals.currentSession);
-    console.log(req.session);
     next();
   } else {
     res.redirect('/login');
