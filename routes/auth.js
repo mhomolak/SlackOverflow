@@ -74,6 +74,7 @@
                         req.session.email = req.body.email;
                         req.session.admin = req.body.admin;
                         req.session.id = req.body.id;
+                        req.session.admin = true;
                         req.session.save();
                     }).then(function() {
                         res.redirect('../users');
@@ -99,6 +100,7 @@
       }).first().then(function(user) {
         if (user && bcrypt.compareSync(req.body.password, user.password)) {
           req.session.email = user.email;
+          req.session.admin = user.admin;
           res.redirect('../users');
         } else {
           res.redirect('/login');

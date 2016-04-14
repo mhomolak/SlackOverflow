@@ -18,6 +18,9 @@
         <td><a href='/users/profile/{{user_id}}'>{{name}}</a></td>
         <td>{{body}}</td>
         <td>{{created_at}}</td>
+        {{#if ../adminStatus}}
+        <td><a href='/users/confirmdelete/replies/{{reply_id}}'>Delete</a></td>
+        {{/if}}
       </tr>
     {{/data}}
   </table>

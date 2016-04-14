@@ -11,6 +11,46 @@ router.get('/', function(req, res, next) {
   })
 });
 
+
+router.post('/delete', function(req, res, next){
+  console.log(req.body);
+  knex(''+ req.body.type + '').where('id', req.body.id).del()
+    .then(function(){
+      res.redirect('/users/admin')
+    })
+})
+
+router.get('/confirmdelete/:deletetype/:id', function(req, res, next){
+  knex(''+ req.params.deletetype + '').where('id', req.params.id)
+  .then(function(results){
+    console.log(results);
+    if (req.params.deletetype == 'replies'){
+      typeInput = 'reply';
+      nameInput = results[0].body
+    } else {
+      typeInput = req.params.deletetype;
+      nameInput = results[0].name
+    }
+    res.render('confirmdelete', {typeDelete: req.params.deletetype, type:typeInput, name:nameInput, id:results[0].id})
+  });
+})
+
+router.get('/admin', function(req, res, next){
+  var UsersArticlesLists = {};
+  knex('users')
+  .then(function(results){
+    UsersArticlesLists.users = results;
+    knex('articles')
+    .then(function(articlesresults){
+      UsersArticlesLists.articles = articlesresults;
+      console.log(UsersArticlesLists)
+      res.render('admin', { users : UsersArticlesLists.users, articles: UsersArticlesLists.articles})
+    })
+  })
+})
+
+
+
 router.get('/articles/:articlesID', function(req, res, next) {
   var bigArray = [];
   var articlesArr = [];
@@ -153,15 +193,21 @@ router.get('/questions/:threadID', function(req, res, next) {
   var threadName;
   knex('questions').where('id', req.params.threadID)
     .then(function(threadresults) {
-      threadName = threadresults[0].title
+      threadName = threadresults[0].title;
     }).then(function() {
-      knex('replies').where('question_id', req.params.threadID)
+      knex('replies').select('replies.id as reply_id', '*').where('question_id', req.params.threadID)
         .innerJoin('users', 'users.id', 'replies.user_id')
         .then(function(results) {
+          // if (req.session){
+          //   console.log(req.session.admin);
+          // }
+          var adminBool = req.session.admin;
+          console.log(results)
           res.render('thread', ({
             data: results,
             thread_title: threadName,
-            thread_id:req.params.threadID
+            thread_id:req.params.threadID,
+            adminStatus: adminBool
           }));
 //           return knex('articles')
 //           .then(function(articles){
